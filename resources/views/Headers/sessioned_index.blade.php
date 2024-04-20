@@ -1,9 +1,9 @@
 @section('header')
     <div class="container mx-auto flex-row justify-around p-4" id="header" style="backdrop-filter: blur(8px);">
-        <nav class="relative">
-            <div class="max-w-7xl mx-auto flex justify-between items-start flex-col lg:flex-row sm:flex-col sm:align-middle">
+        <nav class="relative h-auto">
+            <div class="max-w-7xl mx-auto flex flex-wrap w-full justify-between items-start flex-row md:flex-row sm:flex-row sm:align-middle">
                 <a href="/" class="text-gray-950 text-2xl font-bold mb-4 lg:mb-0 sm:mb-4 w-1/2 lg:w-auto sm:w-full lg:order-1 order-1">RêntHûb.es</a>
-                <div id="navSearch" class="flex flex-col sm:flex-row mb-4 lg:mb-0 sm:mb-4 w-full lg:w-auto sm:w-auto relative lg:order-2 order-3 mt-3 lg:mt-0">
+                <div id="navSearch" class="hidden flex flex-col sm:flex-row mb-4 lg:mb-0 sm:mb-4 w-full lg:w-auto sm:w-auto relative lg:order-2 order-3 mt-3 lg:mt-0">
                     <div class="flex relative">
                         <input id="locationInput" type="text" placeholder="Ciudad, barrio, calle..."
                             class="w-full lg:w-96 sm:w-64 px-2 py-1 border border-gray-300 rounded-tl-md sm:rounded-l-md">
@@ -26,17 +26,66 @@
                     </div>
         
                 </div>
-                <ul class="flex space-x-4 justify-center w-full items-center lg:w-auto order-3">
-                    <li><a href="/login" class="text-gray-600 font-bold hover:text-gray-950">Iniciar sesión</a></li>
-                    <li><a href="/signup" class="text-gray-600 font-bold hover:text-gray-950">Registrarme</a></li>
-                </ul>
+                <div class="relative xl:order-3 order-2">
+                    <button class="profile-button rounded-full h-12 w-auto p-1 flex items-center justify-center border-1 border border-gray-200 focus:outline-none">
+                        <img src="{{ App\Models\User::getProfilePic(Auth::user()->id) }}" alt="Imagen de perfil" class="rounded-full h-10 w-10">
+                        <p class="p-1 py-2 text-sm text-gray-700 font-bold">
+                            {{ App\Models\Particular::getParticularName(Auth::user()->id) }}</p>
+                    </button>
+                    <div class="dropdown-menu absolute right-0 z-50 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 hidden">
+                        <p class="block px-4 py-2 text-md text-gray-700 font-bold border-b border-gray-200">
+                            <?php
+                            date_default_timezone_set('Europe/Madrid');
+                            $hora = date('G');
+                            
+                            if ($hora >= 5 && $hora < 12) {
+                                echo '¡Buenos días!';
+                            } elseif ($hora >= 12 && $hora < 20) {
+                                echo '¡Buenas tardes!';
+                            } else {
+                                echo '¡Buenas noches!';
+                            } ?>
+                        </p>
+                        <a href="/messages" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mensajes</a>
+                        <a href="/favs" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Favoritos</a>
+                        <a href="/anuncio/new" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Publicar anuncio</a>
+                        <a href="/recent" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200">Búsquedas</a>
+                        <a href="/management" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Área de gestión</a>
+                        <a href="/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200">Perfil y cuenta</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 hover:cursor-pointer" :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                {{ __('Cerrar sesión') }}
+                            </a>
+                        </form>
+                    </div>
+                </div>
             </div>
         </nav>
+        
+
 
     </div>
     <script>
-        var searchButton=document.getElementById('searchButton');
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileButton = document.querySelector('.profile-button');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
 
+            profileButton.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', function(event) {
+                const isClickInside = profileButton.contains(event.target) || dropdownMenu.contains(event
+                    .target);
+                if (!isClickInside) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+    <script>
+        let searchButton = document.getElementById('searchButton')
         searchButton.addEventListener('click', function() {
             var conceptName = $('#category').find(":selected").val();
             var locationInput = $('#locationInput').val();
@@ -44,11 +93,13 @@
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places"></script>
+
+    </script>
     <script>
         var searchInput = document.getElementById('locationInput');
         var searchResults = document.getElementById('searchResults');
 
-        searchInput.setAttribute('autocomplete', 'off');
+        //searchInput.setAttribute('autocomplete', 'off');
 
         var autocomplete = new google.maps.places.Autocomplete(null, {
             types: ['address']

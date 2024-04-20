@@ -1,22 +1,17 @@
 @section('header')
     <div class="container mx-auto flex-row justify-around p-4" id="header" style="backdrop-filter: blur(8px);">
-        <nav class="relative">
-            <div
-                class="max-w-7xl mx-auto flex flex-wrap justify-between items-start flex-row lg:flex-row sm:flex-col sm:align-middle">
-                <a href="/"
-                    class="text-gray-950 text-2xl font-bold mb-4 lg:mb-0 sm:mb-4 w-1/2 lg:w-auto sm:w-full lg:order-1 order-1">RêntHûb.es</a>
-                <div id="navSearch"
-                    class="flex mb-4 lg:mb-0 sm:mb-4 w-full lg:w-auto sm:w-auto relative lg:order-2 order-3 mt-3 lg:mt-0">
-                    <div class="flex">
-                        <div class="flex relative">
-                            <input id="locationInput" type="text" placeholder="Ciudad, barrio, calle..."
-                                class="w-full lg:w-96 sm:w-64 px-2 py-1 border border-gray-300 rounded-l-md">
-                            <div id="searchResults"
-                                class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-l-md z-50 rounded-br-md hidden">
-                            </div>
+        <nav class="relative h-auto">
+            <div class="max-w-7xl mx-auto flex flex-wrap w-full justify-between items-start flex-row md:flex-row sm:flex-row sm:align-middle">
+                <a href="/" class="text-gray-950 text-2xl font-bold mb-4 lg:mb-0 sm:mb-4 w-1/2 lg:w-auto sm:w-full lg:order-1 order-1">RêntHûb.es</a>
+                <div id="navSearch" class="flex flex-col sm:flex-row mb-4 lg:mb-0 sm:mb-4 w-full lg:w-auto sm:w-auto relative lg:order-2 order-3 mt-3 lg:mt-0">
+                    <div class="flex relative">
+                        <input id="locationInput" type="text" placeholder="Ciudad, barrio, calle..."
+                            class="w-full lg:w-96 sm:w-64 px-2 py-1 border border-gray-300 rounded-tl-md sm:rounded-l-md">
+                        <div id="searchResults" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-l-md z-10 rounded-br-md hidden">
                         </div>
-                        <select name="category" id="category"
-                            class="w-full lg:w-40 sm:w-100 px-2 py-1 border border-gray-300">
+                    </div>
+                    <div class="flex ">
+                        <select name="category" id="category" class="w-full lg:w-40 sm:w-auto px-2 py-1 border rounded-bl-md sm:rounded-none border-gray-300">
                             <option value="none" disabled selected hidden required>Categoría</option>
                             <option value="pisos">Piso</option>
                             <option value="locales">Local</option>
@@ -27,20 +22,17 @@
                             <option value="trasteros">Trastero</option>
                             <option value="terrenos">Terreno</option>
                         </select>
-                        <button id="searchButton"
-                            class="bg-white border border-gray-300 text-black px-3 py-1 rounded-r-md  hover:bg-gray-600 hover:text-white hover:border-gray-600">Buscar</button>
+                        <button id="searchButton" class="bg-white border border-gray-300 text-black px-3 py-1 rounded-br-md sm:rounded-r-md  hover:bg-gray-600 hover:text-white hover:border-gray-600">Buscar</button>
                     </div>
+        
                 </div>
-                <div class="relative lg:order-3 order-2">
-                    <button
-                        class="profile-button rounded-full h-12 w-auto p-1 flex items-center justify-center border-1 border border-gray-200 focus:outline-none">
-                        <img src="{{ App\Models\User::getProfilePic(Auth::user()->id) }}" alt="Imagen de perfil"
-                            class="rounded-full h-10 w-10">
+                <div class="relative xl:order-3 order-2">
+                    <button class="profile-button rounded-full h-12 w-auto p-1 flex items-center justify-center border-1 border border-gray-200 focus:outline-none">
+                        <img src="{{ App\Models\User::getProfilePic(Auth::user()->id) }}" alt="Imagen de perfil" class="rounded-full h-10 w-10">
                         <p class="p-1 py-2 text-sm text-gray-700 font-bold">
                             {{ App\Models\Particular::getParticularName(Auth::user()->id) }}</p>
                     </button>
-                    <div
-                        class="dropdown-menu absolute right-0 z-90 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 hidden">
+                    <div class="dropdown-menu absolute right-0 z-50 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 hidden">
                         <p class="block px-4 py-2 text-md text-gray-700 font-bold border-b border-gray-200">
                             <?php
                             date_default_timezone_set('Europe/Madrid');
@@ -52,31 +44,26 @@
                                 echo '¡Buenas tardes!';
                             } else {
                                 echo '¡Buenas noches!';
-                            } ?></p>
+                            } ?>
+                        </p>
                         <a href="/messages" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mensajes</a>
                         <a href="/favs" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Favoritos</a>
-                        <a href="/anuncio/new" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Publicar
-                            anuncio</a>
-                        <a href="/recent"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200">Búsquedas</a>
-                        <a href="/management" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Área de
-                            gestión</a>
-                        <a href="/account"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200">Perfil
-                            y
-                            cuenta</a>
+                        <a href="/anuncio/new" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Publicar anuncio</a>
+                        <a href="/recent" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200">Búsquedas</a>
+                        <a href="/management" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Área de gestión</a>
+                        <a href="/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200">Perfil y cuenta</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <a class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 hover:cursor-pointer"
-                                :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                            <a class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 hover:cursor-pointer" :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Cerrar sesión') }}
                             </a>
                         </form>
                     </div>
                 </div>
-
             </div>
         </nav>
+        
+
 
     </div>
     <script>

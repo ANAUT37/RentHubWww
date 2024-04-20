@@ -150,6 +150,7 @@
                                         </svg>
                                     </button>
                                 </div>
+                                
                                 <div class="flex-grow ml-4">
                                     <div class="relative w-full">
                                         <input type="text" placeholder="Escribe un mensaje"

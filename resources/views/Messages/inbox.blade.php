@@ -78,35 +78,14 @@
         <div class="flex flex-col-reverse justify-end h-auto  overflow-y-auto mx-0"
             style="margin-bottom: 4rem; max-height: calc(100% - 13rem);">
             <div id="chatDisplay" class="container flex flex-col-reverse flex-grow overflow-x-auto px-10">
-                <div class="p-2 flex justify-start gap-2">
-                    <img class="profile-button rounded-full h-10 w-auto flex items-center justify-center border-1 border border-gray-200 focus:outline-none"
-                        src="{{ App\Models\User::getProfilePic(Auth::user()->id) }}" alt="">
-                    <div class="bg-gray-100 rounded-md p-2">
-                        <div class="font-bold">
-                            Pablo
-                        </div>
-                        <div>
-                            Lorem ipsum dolor sit amet
-                        </div>
-                    </div>
-                </div>
+
             </div>
         @else
             <div class="flex flex-col-reverse justify-end  overflow-y-auto mx-0"
                 style="margin-bottom: 4rem; max-height: calc(100% - 13rem);">
                 <div id="chatDisplay" class="container flex flex-col-reverse flex-grow overflow-x-auto px-10">
-                    <div class="p-2 flex justify-start gap-2">
-                        <img class="profile-button rounded-full h-10 w-auto flex items-center justify-center border-1 border border-gray-200 focus:outline-none"
-                            src="{{ App\Models\User::getProfilePic(Auth::user()->id) }}" alt="">
-                        <div class="bg-gray-100 rounded-md p-2">
-                            <div class="font-bold">
-                                Pablo
-                            </div>
-                            <div>
-                                Lorem ipsum dolor sit amet
-                            </div>
-                        </div>
-                    </div>
+                    
+                    
                 </div>
                 <div id="documentsDisplay" class="w-full h-full flex justify-center items-center z-30 hidden">
                     <div id="documentSelectorDisplay"

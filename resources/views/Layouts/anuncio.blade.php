@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @vite('resources/css/app.css')
 </head>
+
 <body>
     @yield('system-message')
     <div class="min-h-screen flex flex-col justify-between">
@@ -15,16 +17,15 @@
             <div class="sticky top-0 z-40">
                 @yield('header')
             </div>
-            @yield('top')
-            @yield('map')
+            @yield('gallery')
         </div>
-        </div>
-        <div class="min-h-screen flex flex-col justify-between">
+        <div class="min-h-screen">
             <div class="container mx-auto">
                 @yield('content')
             </div>
         </div>
-        @yield('footer')
+    </div>
+    @yield('footer')
     </div>
 </body>
 

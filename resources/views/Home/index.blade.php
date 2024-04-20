@@ -3,7 +3,7 @@
 @section('header')
     <div class="sticky">
         @if (Auth::check())
-            @include('Headers.sessioned')
+            @include('Headers.sessioned_index')
         @else
             @include('Headers.no_session')
         @endif
@@ -157,7 +157,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 var header = document.getElementById('navSearch');
-                header.classList.add('hide');
+                //header.classList.toggle('hidden');
                 let currentIndex = 0;
                 const items = document.querySelectorAll('.carousel-item');
 
@@ -198,11 +198,11 @@
                     if (isVisible && isScrollingDown) {
                         // Aplicar fadeout si el elemento es visible y el usuario hace scroll hacia abajo
                         elemento.classList.remove('hide');
-                        header.classList.add('hide');
+                        header.classList.add('hidden');
                     } else if (!isVisible) {
                         // Quitar la clase hidden si el elemento no es visible
                         elemento.classList.add('hide');
-                        header.classList.remove('hide');
+                        header.classList.remove('hidden');
                     }
 
                     lastScrollY = window.scrollY;
