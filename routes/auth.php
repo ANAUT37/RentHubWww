@@ -25,6 +25,8 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [Asc::class, 'create'])
         ->name('login');
 
+    Route::post('login/verify',[Asc::class,'saveSession'])->name('login.verify');
+
     Route::post('login', [Asc::class, 'store']);
 
     Route::get('login/forgotten', [PasswordResetLinkController::class, 'create'])

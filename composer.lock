@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3587f468d53c3ec7754b5da9a0b63252",
+    "content-hash": "18bda39cf1cf10c64158cc2b007a7c29",
     "packages": [
         {
             "name": "brick/math",
@@ -665,6 +665,69 @@
             "time": "2023-08-08T05:53:35+00:00"
         },
         {
+            "name": "firebase/php-jwt",
+            "version": "v6.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "a49db6f0a5033aef5143295342f1c95521b075ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/a49db6f0a5033aef5143295342f1c95521b075ff",
+                "reference": "a49db6f0a5033aef5143295342f1c95521b075ff",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4||^8.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.5||^7.4",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.5",
+                "psr/cache": "^1.0||^2.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0"
+            },
+            "suggest": {
+                "ext-sodium": "Support EdDSA (Ed25519) signatures",
+                "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "keywords": [
+                "jwt",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/firebase/php-jwt/issues",
+                "source": "https://github.com/firebase/php-jwt/tree/v6.10.0"
+            },
+            "time": "2023-12-01T16:26:39+00:00"
+        },
+        {
             "name": "fruitcake/php-cors",
             "version": "v1.3.0",
             "source": {
@@ -1207,6 +1270,59 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "hi-folks/rando-php",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hi-Folks/rando-php.git",
+                "reference": "fd1e1421effa441c652f1df25e4a55c934bb6709"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hi-Folks/rando-php/zipball/fd1e1421effa441c652f1df25e4a55c934bb6709",
+                "reference": "fd1e1421effa441c652f1df25e4a55c934bb6709",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0|^8.0|^9.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "HiFolks\\RandoPhp\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roberto Butti",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Random generator Library for PHP",
+            "homepage": "https://github.com/hi-folks/rando-php",
+            "keywords": [
+                "draw",
+                "generator",
+                "hi-folks",
+                "library",
+                "rando-php",
+                "random",
+                "sequence"
+            ],
+            "support": {
+                "issues": "https://github.com/Hi-Folks/rando-php/issues",
+                "source": "https://github.com/Hi-Folks/rando-php/tree/v0.2.0"
+            },
+            "time": "2021-07-01T05:48:59+00:00"
         },
         {
             "name": "laravel/breeze",
@@ -2310,16 +2426,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "3.2.4",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "82c28278c1c8f7b82dcdab25692237f052ffc8d8"
+                "reference": "7219739c4e01d4680c980545821733b6ed8ee880"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/82c28278c1c8f7b82dcdab25692237f052ffc8d8",
-                "reference": "82c28278c1c8f7b82dcdab25692237f052ffc8d8",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/7219739c4e01d4680c980545821733b6ed8ee880",
+                "reference": "7219739c4e01d4680c980545821733b6ed8ee880",
                 "shasum": ""
             },
             "require": {
@@ -2412,7 +2528,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-05T09:58:10+00:00"
+            "time": "2024-04-18T16:35:06+00:00"
         },
         {
             "name": "nette/schema",
@@ -2760,16 +2876,16 @@
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v1.20.1",
+            "version": "v1.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/sodium_compat.git",
-                "reference": "1840b98d228bdad83869b191d7e51f9bb6624d8d"
+                "reference": "102bcf2312dc21c16c7c93fd44a6d2a2e1343e26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/1840b98d228bdad83869b191d7e51f9bb6624d8d",
-                "reference": "1840b98d228bdad83869b191d7e51f9bb6624d8d",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/102bcf2312dc21c16c7c93fd44a6d2a2e1343e26",
+                "reference": "102bcf2312dc21c16c7c93fd44a6d2a2e1343e26",
                 "shasum": ""
             },
             "require": {
@@ -2840,9 +2956,9 @@
             ],
             "support": {
                 "issues": "https://github.com/paragonie/sodium_compat/issues",
-                "source": "https://github.com/paragonie/sodium_compat/tree/v1.20.1"
+                "source": "https://github.com/paragonie/sodium_compat/tree/v1.21.0"
             },
-            "time": "2024-04-05T21:00:10+00:00"
+            "time": "2024-04-19T09:18:28+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -4363,6 +4479,55 @@
                 }
             ],
             "time": "2023-06-16T10:52:11+00:00"
+        },
+        {
+            "name": "sadiqsalau/laravel-otp",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sadiqsalau/laravel-otp.git",
+                "reference": "f322ef85df45a640f787d0c37d0c304a40ab09d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sadiqsalau/laravel-otp/zipball/f322ef85df45a640f787d0c37d0c304a40ab09d9",
+                "reference": "f322ef85df45a640f787d0c37d0c304a40ab09d9",
+                "shasum": ""
+            },
+            "require": {
+                "hi-folks/rando-php": "^0.2.0",
+                "laravel/framework": "^9|^10|^11",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SadiqSalau\\LaravelOtp\\OtpServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SadiqSalau\\LaravelOtp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sadiq Salau",
+                    "email": "sadiqsalau888@gmail.com"
+                }
+            ],
+            "description": "OTP Package for Laravel",
+            "support": {
+                "issues": "https://github.com/sadiqsalau/laravel-otp/issues",
+                "source": "https://github.com/sadiqsalau/laravel-otp/tree/v1.0.6"
+            },
+            "time": "2024-03-20T21:20:33+00:00"
         },
         {
             "name": "stripe/stripe-php",

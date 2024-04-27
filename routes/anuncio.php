@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/anuncio/new', [AnuncioController::class, 'create'])
+    Route::get('/anuncio/new', [AnuncioController::class, 'new'])
     ->name('anuncio.new');
     /*
     Route::get('/account/notifications', [AccountOptionsController::class, 'index'])->name('profile.index');

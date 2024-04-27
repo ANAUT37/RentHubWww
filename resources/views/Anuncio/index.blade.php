@@ -334,9 +334,6 @@
             shareDisplayBackdrop.classList.add('hidden'); // Oculta el backdrop al hacer clic fuera del shareDisplay
         });
     </script>
-
-
-
     <script>
         // Compartir en Facebook
         const shareFacebookButton = document.getElementById('shareFacebook');
@@ -373,12 +370,6 @@
         });
         
     </script>
-
-
-
-
-
-
     <br><br><br>
 @endsection
 @section('footer')

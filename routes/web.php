@@ -16,6 +16,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 */
+require __DIR__.'/management.php';
+require __DIR__.'/docs.php';
+require __DIR__.'/otp.php';
 require __DIR__.'/anuncio.php';
 require __DIR__.'/messages.php';
 require __DIR__.'/auth.php';
