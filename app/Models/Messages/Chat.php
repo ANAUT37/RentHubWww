@@ -5,6 +5,7 @@ namespace App\Models\Messages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Particular;
+use App\Models\User;
 
 class Chat extends Model
 {
@@ -67,8 +68,41 @@ class Chat extends Model
         $chat = Chat::find($chatId);
         return $chat ? $chat->chat_name : null;
     }
-    
 
+    public static function getChatName($displayId, $currentUserId){
+        $chatId=Chat::getChatIdFromDisplayId($displayId);
+        $chatParticipantsIds = ChatParticipants::getParticipantsFromChat($chatId);
+    
+        if (count($chatParticipantsIds) === 2) {
+            // Obtiene los IDs de los participantes que no son el usuario actual
+            $otherParticipantId = array_values(array_diff($chatParticipantsIds->toArray(), [$currentUserId]))[0];
+            $otherParticipantData =Particular::getParticularData($otherParticipantId);
+            return $otherParticipantData->name.' '.$otherParticipantData->surname;
+        }
+        
+    
+        // Si no hay dos participantes o si el usuario actual es uno de los participantes, devuelve el nombre del chat
+        $chat = Chat::find($chatId);
+        return $chat ? $chat->chat_name : null;
+    }
+
+    public static function getShowablePic($chatId, $currentUserId)
+    {
+        $chatParticipantsIds = ChatParticipants::getParticipantsFromChat($chatId);
+    
+        if (count($chatParticipantsIds) === 2) {
+            // Obtiene los IDs de los participantes que no son el usuario actual
+            $otherParticipantId = array_values(array_diff($chatParticipantsIds->toArray(), [$currentUserId]))[0];
+            $otherParticipantData =Particular::getParticularData($otherParticipantId);
+            $userId=User::where('id',$otherParticipantData->user_id)->first();
+            return $userId;
+        }
+        
+    
+        // Si no hay dos participantes o si el usuario actual es uno de los participantes, devuelve el nombre del chat
+        $chat = Chat::find($chatId);
+        return $chat ? $chat->chat_name : null;
+    }
     
     
 }

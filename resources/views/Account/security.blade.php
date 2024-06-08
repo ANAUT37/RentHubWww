@@ -34,12 +34,13 @@
                     <label for="nombre" class="text-md text-gray-500 cursor-pointer underline">Actualizar</label>
                 </div><br>
                 <div>
-                    <form action="{{ route('account.reset-password') }}" method="POST" class="flex justify-between flex-col gap-1 mt-1">
+                    <form action="{{ route('account.reset-password') }}" method="POST"
+                        class="flex justify-between flex-col gap-1 mt-1">
                         @csrf
-                        <input name="current_password" type="password" placeholder="Contraseña actual" value="Pitillas6839" 
+                        <input name="current_password" type="password" placeholder="Contraseña actual" value="Pitillas6839"
                             class="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600">
-                            <br>
-                        <input name="password" type="password" placeholder="Nueva contraseña"  value="Pitillas123"
+                        <br>
+                        <input name="password" type="password" placeholder="Nueva contraseña" value="Pitillas123"
                             class="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600">
                         <input name="confirmed" type="password" placeholder="Confirmar nueva contraseña" value="Pitillas123"
                             class="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600">
@@ -47,6 +48,53 @@
                             class="bg-gray-100 border w-1/2 border-gray-300 text-black px-6 py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none cursor-pointer">
                     </form>
                 </div>
+            </div>
+            <div class="flex flex-col align-top  border-b border-gray-200 mb-4 pb-4 p-2">
+                <p class="text-md">PIN de Acceso Seguro</p>
+                <div class="flex justify-between cursor-pointer">
+                    <p name="nombre" class="text-lg text-gray-500  hover:opacity-100">
+                        <?php
+                           if( App\Models\SecurePin::isPinActivated(Auth::user()->id)){
+                        ?>
+                        <b class="text-green-600">Activado</b>
+                        <?php }else{ ?>
+                        <b class="text-red-600">Desactivado</b>
+                        <?php
+                        }
+                        ?>
+                        <br>El PIN de Acceso Seguro es un código personalizado de 6 dígitos que se
+                        utiliza para proteger el acceso a partes importantes de tu cuenta, como la configuración, la
+                        seguridad, los contratos y otra información sensible. Cuando activas esta opción, se te pedirá que
+                        establezcas un código PIN único.
+                    </p>
+                    <button class="text-md text-gray-500 cursor-pointer underline" id="securePinButton">Actualizar</button>
+                </div>
+                <br>
+                <form method="POST" action="secure/save" class="flex justify-between flex-col gap-1 mt-1 hidden" id="securePinForm">
+                    @csrf
+                    <?php
+                    if( App\Models\SecurePin::isPinActivated(Auth::user()->id)){
+                    ?>
+                    <input name="current_pin" type="password" placeholder="PIN de Acceso Seguro actual" maxlength="6" required
+                        class="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600">
+                    <br>
+                    <?php }?>
+                    <input name="new_pin" type="password" placeholder="Nuevo PIN de Acceso Seguro" maxlength="6" required
+                        class="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600">
+                    <input name="confirmed_pin" type="password" placeholder="Confirmar nuevo PIN de Acceso Seguro"
+                        value="" maxlength="6" required
+                        class="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600">
+                    <input type="submit" value="Guardar"
+                        class="bg-gray-100 border w-1/2 border-gray-300 text-black px-6 py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none cursor-pointer">
+                </form>
+                <script>
+                    const securePinButton=document.getElementById('securePinButton');
+                    const securePinForm=document.getElementById('securePinForm');
+
+                    securePinButton.addEventListener('click', function(){
+                        securePinForm.classList.toggle('hidden');
+                    })
+                </script>
             </div>
             <div class="flex flex-col align-top  border-b border-gray-200 mb-4 pb-4 p-2">
                 <p class="text-md">Autenticación en 2 pasos</p>

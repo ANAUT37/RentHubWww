@@ -22,8 +22,10 @@ class Particular extends Model
         'birthdate',
         'genre',
         'verified',
-        'description'
-
+        'description',
+        'job',
+        'lenguage',
+        'location'  
     ];
         /**
      * El nombre de la tabla asociada con el modelo.
@@ -33,8 +35,9 @@ class Particular extends Model
     protected $table = 'users_particular';
 
     public static function getParticularData($userId)
-    {
-        return Particular::where('user_id', $userId)->first();
+    {   
+        $data=Particular::where('user_id', $userId)->first();
+        return $data;;
     }
 
     public static function getParticularName($userId){

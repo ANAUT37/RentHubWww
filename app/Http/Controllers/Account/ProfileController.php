@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Particular;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,20 +17,48 @@ class ProfileController extends Controller
 
     public function index(Request $request): View
     {
+
         return view('profile.index', [
             'user' => $request->user(),
         ]);
     }
 
 
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    public function edit(Request $request)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $request->user();
+        $particularData=Particular::getParticularData($user->id);
+    
+        if ($request->isMethod('post')) {
+            $userData = $request->all();
+
+            $userKeys = ['email', 'phone'];
+            $particularKeys = ['name','surname','genre','description','job','location','lenguage'];
+    
+            foreach ($userData as $key => $value) {
+                if (!empty($value) && in_array($key, $userKeys)) {
+                    $user->{$key} = $value;
+                }else if(!empty($value)&& in_array($key, $particularKeys)){
+                    $particularData->{$key}=$value;
+                }
+            }
+            
+            $user->save();
+            $particularData->save();
+        }
+    
+        return redirect()->back();
+    }
+    
+
+    public function show(Request $request, $display_id)
+    {
+        $userData = User::getDataByDisplayId($display_id);
+        if ($userData != null) {
+            return view('profile.particular', compact('display_id', 'userData'));
+        } else {
+            return view('errors.404'); // Redirige a la vista de error 404
+        }
     }
 
     /**

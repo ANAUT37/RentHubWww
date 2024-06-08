@@ -11,88 +11,168 @@
     </div>
 @endsection
 @section('content')
+    @php
+        use App\Models\User;
+        use App\Models\InmuebleImage;
+    @endphp
     <div
         class="max-w-7xl mx-auto flex flex-wrap justify-between items-start flex-row lg:flex-row sm:flex-col sm:align-middle mt-4">
         <div>
             <div class="relative gap-2 grid lg:grid-cols-2 sm:grid-cols-1">
-                <div class="relative h-full">
-                    <img class="h-full max-w-full  lg:rounded-l-lg object-cover"
-                        src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+                <div class="relative h-full" onclick="openInThisPic(0)">
+                    <img class="h-full w-full lg:rounded-l-lg object-cover"
+                        src="{{ InmuebleImage::getImageFromUrl($listOfImages[0]->url_image) }}" alt="">
                     <div class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 rounded-l-lg"></div>
                 </div>
-                <div class="lg:grid grid-cols-2 gap-2 hidden ">
-                    <div class="relative">
-                        <img class="h-auto max-w-full  object-cover"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                        <div
-                            class="absolute  inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 transition-opacity ">
+                <div class="lg:grid grid-cols-2 gap-2 lg:block hidden">
+                    @if (isset($listOfImages[1]))
+                        <div class="relative  col-span-1 row-span-1" onclick="openInThisPic(1)">
+                            <img class="h-full w-full object-cover"
+                                src="{{ InmuebleImage::getImageFromUrl($listOfImages[1]->url_image) }}" alt="">
+                            <div
+                                class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 transition-opacity ">
+                            </div>
                         </div>
-                    </div>
-                    <div class="relative">
-                        <img class="h-auto max-w-full rounded-tr-lg object-cover"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                        <div class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 rounded-tr-lg">
+                    @endif
+                    @if (isset($listOfImages[2]))
+                        <div class="relative  col-span-1 row-span-1" onclick="openInThisPic(2)">
+                            <img class="h-full w-full object-cover"
+                                src="{{ InmuebleImage::getImageFromUrl($listOfImages[2]->url_image) }}" alt="">
+                            <div
+                                class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 transition-opacity ">
+                            </div>
                         </div>
-                    </div>
-                    <div class="relative">
-                        <img class="h-auto max-w-full object-cover"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                        <div class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15"></div>
-                    </div>
-                    <div class="relative">
-                        <img class="h-auto max-w-full rounded-br-lg  object-cover"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                        <div class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 rounded-br-lg">
+                    @endif
+                    @if (isset($listOfImages[3]))
+                        <div class="relative  col-span-1 row-span-1" onclick="openInThisPic(3)">
+                            <img class="h-full w-full object-cover"
+                                src="{{ InmuebleImage::getImageFromUrl($listOfImages[3]->url_image) }}" alt="">
+                            <div
+                                class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 transition-opacity ">
+                            </div>
                         </div>
-                    </div>
+                    @endif
+                    @if (isset($listOfImages[4]))
+                        <div class="relative  col-span-1 row-span-1" onclick="openInThisPic(4)">
+                            <img class="h-full w-full object-cover"
+                                src="{{ InmuebleImage::getImageFromUrl($listOfImages[4]->url_image) }}" alt="">
+                            <div
+                                class="absolute inset-0 cursor-pointer bg-gray-950 opacity-0 hover:opacity-15 transition-opacity ">
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                <div
-                    class="absolute bottom-5 right-5  bg-gray-100 border mt-2 flex gap-2 border-gray-300 text-black px-4 py-1 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none cursor-pointer">
+                <div id="imageGalleryButtonOpen"
+                    class="absolute bottom-5 right-5 bg-gray-100 text-gray-950 mt-2 flex gap-2  px-4 py-1 rounded-md hover:bg-gray-200  focus:outline-none cursor-pointer">
                     <div class="flex gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                         </svg>
-
-                        <button class="">Ver galería completa</button>
+                        <button>Ver galería completa</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="m-full mx-2 lg:w-8/12 flex flex-col align-middle lg:mx-auto">
+
+        <div class="w-full mx-2 lg:w-8/12 flex flex-col align-middle lg:mx-auto">
             <div class="py-4 flex justify-between w-full px-2 lg:px-0">
                 <div>
-                    <h1 class="lg:text-2xl font-bold text-gray-950">Título</h1>
-                    <p class="lg:text-2xl font-bold text-gray-700">Dirección</p>
+                    <h1 class="lg:text-2xl font-bold text-gray-950">{{ $anuncioData->title }}</h1>
+                    <p class="lg:text-2xl font-bold text-gray-700">{{ucfirst($inmuebleData->category)}} en {{ $inmuebleData->address }}</p>
                 </div>
-                <div class="text-end gap-">
-                    <p class="lg:text-2xl font-bold text-gray-950">0€/mes</p>
-                    <button
-                        class="bg-gray-100 border mt-2 flex gap-2 border-gray-300 text-black px-4 py-1 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-                        </svg>
-                        Ponerme en contacto
-                    </button>
-                </div>
+                @if (!Auth::check())
+                    <div class="text-end gap-2">
+                        <p class="lg:text-2xl font-bold text-gray-950">{{ $anuncioData->price }}€/mes</p>
+                        <button id="contactButton"
+                            class="bg-pink-700  text-white mt-2 flex gap-2  px-4 py-2 rounded-md hover:bg-gray-200 e focus:outline-none cursor-pointer items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                            </svg>
+                            Ponerme en contacto
+                        </button>
+                    </div>
+                @endif
+                @if (Auth::check())
+                    @if ($owner->id != Auth::user()->id)
+                        <div class="text-end gap-2">
+                            <p class="lg:text-2xl font-bold text-gray-950">{{ $anuncioData->price }}€/mes</p>
+                            <button id="contactButton"
+                                class="bg-pink-700  text-white mt-2   flex gap-2  px-4 py-2 rounded-md hover:bg-gray-200 e focus:outline-none cursor-pointer items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                                </svg>
+                                Ponerme en contacto
+                            </button>
+                        </div>
+                    @endif
+                @endif
             </div>
             <div class="flex justify-between flex-col sm:flex-row mb-2">
-                <div class="flex justify-center">
-                    <button
-                        class="text-center flex gap-1 hover:cursor-pointer text-black px-3 w-auto
-                    py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">
+                <div class="flex justify-center gap-2">
+                    <button id="favButton"
+                        class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                        py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">
+                        <?php if($isFaved === 0): ?>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                         </svg>
-                        Guardar</button>
+                        Guardar
+                        <?php else: ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path
+                                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                        </svg>
+                        Guardado
+                        <?php endif; ?>
+                    </button>
+                    <script>
+                        var favButton = document.getElementById('favButton');
+                        var isFaved = {{ $isFaved }};
+                        favButton.addEventListener('click', function() {
+                            if (isFaved === 0) {
+                                favButton.innerHTML =
+                                    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg><span>Guardado</span>`;
+                                fetch('/anuncio/fav/{{ $anuncioData->id }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: JSON.stringify({
+                                        isFaved: 1
+                                    })
+                                });
+                            } else {
+                                favButton.innerHTML = `
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                                </svg>
+                                <span>Guardar</span>`;
+                                fetch('/anuncio/fav/{{ $anuncioData->id }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: JSON.stringify({
+                                        isFaved: 0
+                                    })
+                                });
+                            }
+                            isFaved = 1 - isFaved;
+                        });
+                    </script>
                     <button id="shareButtonTop"
-                        class="text-center flex gap-1 hover:cursor-pointer text-black px-3 w-auto
-                    py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">
+                        class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                        py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -100,109 +180,64 @@
                         </svg>
                         Compartir</button>
                 </div>
-                <div class="flex border justify-center border-gray-100 rounded-lg">
-                    <button
-                        class="rounded-l-lg w-full text-center flex gap-1 hover:cursor-pointer text-black px-3 justify-center
-                    py-2 -l-md hover:bg-gray-600 hover:text-white focus:outline-none ">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-                        </svg>
-                        (0)
-                    </button>
-                    <button
-                        class="rounded-r-lg text-center flex gap-1 hover:cursor-pointer text-black px-3 w-full justify-center
-                    py-2  hover:bg-gray-600 hover:text-white focus:outline-none ">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M7.498 15.25H4.372c-1.026 0-1.945-.694-2.054-1.715a12.137 12.137 0 0 1-.068-1.285c0-2.848.992-5.464 2.649-7.521C5.287 4.247 5.886 4 6.504 4h4.016a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23h1.294M7.498 15.25c.618 0 .991.724.725 1.282A7.471 7.471 0 0 0 7.5 19.75 2.25 2.25 0 0 0 9.75 22a.75.75 0 0 0 .75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 0 0 2.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384m-10.253 1.5H9.7m8.075-9.75c.01.05.027.1.05.148.593 1.2.925 2.55.925 3.977 0 1.487-.36 2.89-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398-.306.774-1.086 1.227-1.918 1.227h-1.053c-.472 0-.745-.556-.5-.96a8.95 8.95 0 0 0 .303-.54" />
-                        </svg>
-                        (0)
-                    </button>
-                </div>
             </div>
             <div class="px-2 lg:px-0 w-full">
-                <p class="text-sm lg:text-md text-gray-700">Información del anunciante</p>
-                <div
+                <p class="text-sm lg:text-md text-gray-700">Información del propietario</p>
+                <a href="/user/{{ $owner->display_id }}"
                     class="w-full mt-1 hover:bg-gray-100 hover:cursor-pointer flex lg:flex-row flex-col justify-between items-start lg:items-center rounded-lg">
                     <div class="flex items-center">
                         <div class="px-1 ml-4">
-                            <img class="profile-button rounded-full h-10 w-auto flex items-center justify-center border-1 border border-gray-200 focus:outline-none"
-                                src="https://www.4x4.ec/overlandecuador/wp-content/uploads/2017/06/default-user-icon-8.jpg"
-                                alt="">
+                            <img class="profile-button rounded-full h-10 w-10 flex items-center justify-center border-1 border border-gray-200 focus:outline-none"
+                                src="{{ User::getProfilePic($owner->profile_pic_url) }}" alt="">
                         </div>
                         <div>
                             <div class="max-w-lg p-4 rounded-lg ">
-                                <p class="text-lg text-gray-950">Nombre Apellidos</p>
+                                <p class="text-lg text-gray-950">{{ $ownerTyped->name }} {{ $ownerTyped->surname }}
+                                    @if (Auth::check())
+                                        @if ($owner->id === Auth::user()->id)
+                                            (Tú)
+                                        @endif
+                                    @endif
+
+                                </p>
                                 <p class="text-md text-gray-700">Particular</p>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-row gap-2 items-center lg:flex-col px-4">
-                        <div class="flex">
-                            <p class="text-lg font-bold text-gray-950 mr-2">0.0</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
-                        </div>
-                        <a href="/user/{user_id}/rating" class="hover:underline items-end">Ver valoraciones (0)</a>
-                    </div>
-                </div>
+                </a>
                 <div class="mt-2 border-t border-gray-200 pt-2">
                     <p class="text-sm lg:text-md mb-2 text-gray-700">Información del inmueble</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam repellendus eaque laborum blanditiis
-                        nulla
-                        libero fuga expedita corrupti error obcaecati eos, numquam vitae cupiditate a laudantium
-                        voluptatibus
-                        ipsum nihil nemo! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo odio at
-                        consequatur,
-                        quam vitae tenetur explicabo quos facilis debitis saepe voluptatum in nobis dolore, vel tempora.
-                        Tenetur
-                        eaque excepturi ab.
+                    <p>{{ $anuncioData->description }}
                     </p>
                     <p class="lg:text-2xl font-bold text-gray-700 mt-2 mb-1">Características</p>
-                    <div class="grid lg:grid-cols-12 grid-cols-4 md:grid-cols-6 mt-2">
-                        <div class="flex flex-col items-center w-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                            </svg>
-                            <p class="text-sm lg:text-md text-gray-700">Dato</p>
-                            <p class="text-lg text-gray-950 font-bold">Info</p>
+
+                    @if (count($inmuebleCaracteristicas) > 0)
+                        <div class="grid lg:grid-cols-8 grid-cols-4 md:grid-cols-6 mt-4 mb-8 gap-4 ">
+                            @foreach ($inmuebleCaracteristicas as $item)
+                                <div class="flex flex-col items-center w-auto">
+                                    @if ($item['icon'] != null)
+                                        {!! $item['icon'] !!}
+                                    @else
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                        </svg>
+                                    @endif
+                                    <p class="text-sm lg:text-md text-gray-700">{{ $item['label'] }}</p>
+                                    <p class="text-md text-gray-950 ">{{ ucfirst($item['value']) }}</p>
+                                </div>
+                            @endforeach
                         </div>
+                    @else
+                        <p class="w-full pb-4">No se han encontrado resultados</p>
+                    @endif
 
 
-                    </div>
                     <p class="lg:text-2xl font-bold text-gray-700 mt-2 mb-1">Localización</p>
-                    <p>Dirección</p>
-                    <div id="displayMap" class="w-full h-96 bg-slate-50 rounded-lg mt-2 relative">
-                        <div role="status" id="status"
-                            class="absolute inset-0 flex items-center justify-center z-0">
+                    <p>{{ $inmuebleData->address }}</p>
+                    <div id="mapContainer" class="w-full h-96 bg-slate-50 rounded-lg mt-2 relative">
+                        <div role="status" id="status" class="absolute inset-0 flex items-center justify-center z-0">
                             <svg aria-hidden="true"
                                 class="w-6 h-6 text-gray-100 animate-spin dark:text-gray-300 fill-gray-950"
                                 viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -218,10 +253,10 @@
                     </div>
                     <br>
                     <div class="flex justify-between">
-                        <div class="flex">
+                        <div class="flex gap-2">
                             <button
-                                class="text-center flex gap-1 hover:cursor-pointer text-black px-3 w-auto
-                            py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">
+                                class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                                py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -229,8 +264,8 @@
                                 </svg>
                                 Guardar</button>
                             <button id="shareButton"
-                                class="text-center flex gap-1 hover:cursor-pointer text-black px-3 w-auto
-                            py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">
+                                class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                                py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -240,8 +275,8 @@
                         </div>
                         <div>
                             <button
-                                class="text-center flex gap-1 hover:cursor-pointer text-black px-3 w-auto
-                            py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">
+                                class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                                py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -258,15 +293,18 @@
                     </div>
                     <br><br>
                     <p class="lg:text-2xl font-bold text-gray-700 mt-2 mb-1">También podria interesarte...</p>
-
-
-                    <div id="shareDisplay" class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-30 hidden">
-                        <div id="shareDisplayBackdrop" class="fixed hidden top-0 left-0 w-full h-full bg-black opacity-50"></div>
-                        <div id="documentSelectorDisplay" class="bg-gray-100 lg:w-2/6 lg:h-1/4 h-2/5 mx-auto w-5/6 rounded-md border border-gray-200" style="backdrop-filter: blur(10px);">
+                    <div id="shareDisplay"
+                        class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-30 hidden">
+                        <div id="shareDisplayBackdrop"
+                            class="fixed hidden top-0 left-0 w-full h-full bg-black opacity-50"></div>
+                        <div id="documentSelectorDisplay"
+                            class="bg-gray-100 lg:w-2/6 h-auto mx-auto w-5/6 rounded-md border border-gray-200"
+                            style="backdrop-filter: blur(10px);">
                             <div class="p-6 flex flex-col h-full justify-between">
                                 <p class="text-xl font-bold">Compartir este anuncio</p>
-                                <div class="flex gap-4 flex-wrap justify-between">
-                                    <button id="shareFacebook" class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
+                                <div class="flex gap-8 flex-wrap justify-center  p-4">
+                                    <button id="shareFacebook"
+                                        class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                             fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
                                             <path
@@ -274,7 +312,8 @@
                                         </svg>
                                         Facebook
                                     </button>
-                                    <button id="shareWhatsApp" class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
+                                    <button id="shareWhatsApp"
+                                        class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                             fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
                                             <path
@@ -282,7 +321,8 @@
                                         </svg>
                                         WhatsApp
                                     </button>
-                                    <button id="shareMail" class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
+                                    <button id="shareMail"
+                                        class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                             fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                                             <path
@@ -290,7 +330,8 @@
                                         </svg>
                                         Email
                                     </button>
-                                    <button id="shareTwitter" class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
+                                    <button id="shareTwitter"
+                                        class="flex flex-col align-middle items-center h-full py-8 lg:py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                             fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
                                             <path
@@ -299,86 +340,321 @@
                                         Twitter
                                     </button>
                                 </div>
+                                <div id="qrcode" class="w-full flex justify-center flex-col items-center gap-2 p-4">
+                                    <p class="text-lg font-bold">Código QR</p>
+                                </div>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+                                <script type="text/javascript">
+                                    var currentUrl = window.location.href;
+                                    new QRCode(document.getElementById("qrcode"), currentUrl);
+                                </script>
+
                             </div>
                         </div>
                     </div>
+                    <div id="imageGalleryDisplay"
+                        class="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-30 hidden">
+                        <div id="imageGalleryBackdrop"
+                            class="fixed top-0 left-0 w-full h-full bg-black opacity-50 hidden">
+                        </div>
+                        <div class="w-full h-screen pt-20">
+                            <div id="documentSelectorDisplay"
+                                class="bg-white w-full h-full mx-auto rounded-md flex justify-center"
+                                style="backdrop-filter: blur(10px);">
+                                <div class="w-full h-full flex justify-center">
+                                    <div class="w-full lg:w-3/5 p-4 flex items-center flex-col">
+                                        <div class="w-full flex justify-between items-center">
+                                            <p class="block text-start text-xl font-bold mb-2">Galería de imágenes</p>
+                                            <div id="imageGalleryButtonClose" class="cursor-pointer">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    class="size-10">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="flex items-center flex-col h-full w-full">
+                                            <div
+                                                class="mb-4 w-full h-2/6 md:h-4/6 flex flex-col justify-center items-center ">
+                                                <img id="largeImage"
+                                                    class="min-w-full min-h-full h-full object-cover rounded-lg "
+                                                    src="{{ InmuebleImage::getImageFromUrl($listOfImages[0]->url_image) }}"
+                                                    alt="">
+                                                <div class="flex justify-center w-full py-1 gap-1 items-center">
+                                                    <button id="prevImage"
+                                                        class="h-10 w-10 bg-gray-100 hover:bg-gray-200 p-2 rounded-full focus:outline-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M15 19l-7-7 7-7" />
+                                                        </svg>
+                                                    </button>
+                                                    <span id="countImage"></span>
+                                                    <button id="nextImage"
+                                                        class="h-10 w-10 bg-gray-100 hover:bg-gray-200 p-2 rounded-full focus:outline-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="overflow-x-auto w-full">
+                                                <div id="galleryDisplay" class="flex space-x-4">
+                                                    @foreach ($listOfImages as $item)
+                                                        <div
+                                                            class="thumbnail relative flex-shrink-0 w-32 h-24 cursor-pointer">
+                                                            <img class="w-full h-full object-cover rounded-lg"
+                                                                src="{{ InmuebleImage::getImageFromUrl($item->url_image) }}"
+                                                                alt="">
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        const imageGalleryButtonOpen = document.getElementById('imageGalleryButtonOpen');
+                        const imageGalleryButtonClose = document.getElementById('imageGalleryButtonClose');
+                        const imageGalleryDisplay = document.getElementById('imageGalleryDisplay');
+                        const imageGalleryBackdrop = document.getElementById('imageGalleryBackdrop');
+
+                        imageGalleryButtonOpen.addEventListener('click', function() {
+                            imageGalleryDisplay.classList.toggle('hidden')
+                            imageGalleryBackdrop.classList.toggle('hidden')
+                        })
+                        imageGalleryButtonClose.addEventListener('click', function() {
+                            imageGalleryDisplay.classList.toggle('hidden')
+                            imageGalleryBackdrop.classList.toggle('hidden')
+                        })
+                    </script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Seleccionar todas las imágenes pequeñas y la imagen grande
+                            const thumbnails = document.querySelectorAll('#galleryDisplay .thumbnail img');
+                            const largeImage = document.getElementById('largeImage');
+                            const labelTotal = document.getElementById('countImage')
+                            let currentIndex = 0;
+
+                            const imageTotal = thumbnails.length;
+                            labelTotal.textContent = "1/" + imageTotal;
+                            // Actualizar la imagen grande con la imagen de la miniatura en el índice actual
+                            function updateLargeImage() {
+                                largeImage.src = thumbnails[currentIndex].src;
+                            }
+
+                            // Añadir evento de clic a cada imagen pequeña
+                            thumbnails.forEach((thumbnail, index) => {
+                                thumbnail.addEventListener('click', () => {
+                                    currentIndex = index;
+                                    labelTotal.textContent = (currentIndex + 1) + "/" + imageTotal;
+                                    updateLargeImage();
+                                });
+                            });
+
+                            // Navegación a la imagen anterior
+                            document.getElementById('prevImage').addEventListener('click', () => {
+                                currentIndex = (currentIndex > 0) ? currentIndex - 1 : thumbnails.length - 1;
+                                labelTotal.textContent = (currentIndex + 1) + "/" + imageTotal;
+                                updateLargeImage();
+                            });
+
+                            // Navegación a la imagen siguiente
+                            document.getElementById('nextImage').addEventListener('click', () => {
+                                currentIndex = (currentIndex < thumbnails.length - 1) ? currentIndex + 1 : 0;
+                                labelTotal.textContent = (currentIndex + 1) + "/" + imageTotal;
+                                updateLargeImage();
+                            });
 
 
+                        });
+
+                        function openInThisPic(index) {
+
+                            const thumbnails = document.querySelectorAll('#galleryDisplay .thumbnail img');
+                            const largeImage = document.getElementById('largeImage');
+                            const labelTotal = document.getElementById('countImage')
+                            const imageTotal = thumbnails.length;
+
+                            imageGalleryDisplay.classList.toggle('hidden')
+                            imageGalleryBackdrop.classList.toggle('hidden')
+                            labelTotal.textContent = (index + 1) + "/" + imageTotal;
+                            currentIndex = index;
+                            updateLargeImage();
+
+                            function updateLargeImage() {
+                                largeImage.src = thumbnails[currentIndex].src;
+                            }
+                        }
+                    </script>
+                    <div id="contactDisplay"
+                        class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-30 hidden">
+                        <div id="contactDisplayBackdrop"
+                            class="fixed hidden top-0 left-0 w-full h-full bg-black opacity-50">
+                        </div>
+                        <div id="documentSelectorDisplay"
+                            class="bg-gray-100 lg:w-2/6 lg:h-auto h-auto mx-auto w-5/6 rounded-md border border-gray-200"
+                            style="backdrop-filter: blur(10px);">
+                            @if (Auth::check())
+                                <div class="p-4 flex flex-col h-auto justify-between gap-2">
+                                    <p class="text-xl font-bold">Contactar</p>
+                                    <div class="w-full h-auto flex flex-col justify-start gap-2">
+                                        <p class="text-sm">Se enviará una solicitud de mensaje al propietario del inmueble
+                                        </p>
+                                        <form action="/messages/request/new" method="POST" enctype="multipart/form-data"
+                                            class="flex flex-col gap-2">
+                                            @csrf
+                                            <input type="text" id="contactMessage" name="contactMessage"
+                                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600"
+                                                placeholder="Mensaje" required>
+                                            <input type="text" value="{{ $anuncioData->id }}" name="contactAnuncio"
+                                                hidden>
+                                            <input type="text" value="{{ $anuncioData->user_id }}"
+                                                name="contactReceiver" hidden>
+                                            <div class="flex justify-end">
+                                                <input id="step3" type="submit" value="Enviar"
+                                                    class="next hover:bg-gray-300  cursor-pointer bg-gray-200 px-6 w-auto py-2 rounded-md  focus:outline-none "></input>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="p-6 flex flex-col h-full justify-between">
+                                    <p class="text-xl font-bold">Contactar</p>
+                                    <div class="w-full h-full flex flex-col justify-start gap-2 ">
+                                        <p class="text-sm">Para contactar con <b>{{ $ownerTyped->name }}
+                                                {{ $ownerTyped->surname }}</b> debes tener una cuenta.</p>
+                                        <div class="flex w-full justify-center items-center p-4 gap-2">
+                                            <a href="/login"
+                                                class="px-4 py-2 w-auto bg-gray-200 hover:bg-gray-300 rounded-md">Iniciar
+                                                sesión</a>
+                                            <a href="/login"
+                                                class="px-4 py-2 w-auto bg-gray-200 hover:bg-gray-300 rounded-md">Registrarme</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-
     <script>
-        const shareButtonTop = document.getElementById('shareButtonTop');
-        const shareButton = document.getElementById('shareButton');
-        const shareDisplay = document.getElementById('shareDisplay');
-        const shareDisplayBackdrop = document.getElementById('shareDisplayBackdrop');
+        function getCoordinatesFromOption(option, callback) {
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'address': option
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
+                    var location = results[0].geometry.location;
+                    var coordinates = {
+                        lat: location.lat(),
+                        lng: location.lng()
+                    };
+                    callback(coordinates);
+                } else {
+                    console.error('No se encontraron coordenadas para la opción proporcionada.');
+                    callback(null);
+                }
+            });
+        }
+        getCoordinatesFromOption("{{ $inmuebleData->address }}", function(coordinates) {
+            if (coordinates) {
+                var mapStyles = [{
+                        featureType: 'water',
+                        elementType: 'geometry',
+                        stylers: [{
+                            color: '#D1E9EA'
+                        }]
+                    },
+                    {
+                        featureType: 'landscape',
+                        elementType: 'geometry',
+                        stylers: [{
+                            color: '#F7F7F5'
+                        }]
+                    },
+                    {
+                        featureType: 'road',
+                        elementType: 'geometry',
+                        stylers: [{
+                            color: '#E0E0E0'
+                        }]
+                    },
+                    {
+                        featureType: 'poi',
+                        elementType: 'geometry',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    },
+                    {
+                        featureType: 'poi',
+                        elementType: 'labels',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }
+                ];
 
-        shareButtonTop.addEventListener('click', function() {
-            shareDisplay.classList.toggle('hidden');
-            shareDisplayBackdrop.classList.toggle(
-                'hidden'); // Asegúrate de mostrar u ocultar el backdrop junto con el shareDisplay
-        });
 
-        shareButton.addEventListener('click', function() {  
-            shareDisplay.classList.toggle('hidden');
-            shareDisplayBackdrop.classList.toggle(
-                'hidden'); // Asegúrate de mostrar u ocultar el backdrop junto con el shareDisplay
-        });
+                var map = new google.maps.Map(document.getElementById('mapContainer'), {
+                    center: coordinates,
+                    zoom: 16,
+                    styles: mapStyles,
+                    disableDefaultUI: true,
+                    gestureHandling: "cooperative"
+                });
 
-        shareDisplayBackdrop.addEventListener('click', function() {
-            shareDisplay.classList.add('hidden');
-            shareDisplayBackdrop.classList.add('hidden'); // Oculta el backdrop al hacer clic fuera del shareDisplay
+                var icon = {
+                    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 24 30"><path fill="#2C3E50" d="M12 2C7.31 2 3.74 5.43 3.2 9.998l.001.002c.008.092.019.184.033.276l.008.059C3.4 15.584 12 22 12 22s8.6-6.416 8.748-11.666l.008-.059c.014-.092.025-.184.033-.276l.001-.002C20.26 5.43 16.69 2 12 2zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 2.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>'
+                    ),
+                    scaledSize: new google.maps.Size(38, 46),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(12, 30)
+                };
+
+                var marker = new google.maps.Marker({
+                    position: coordinates,
+                    map: map,
+                    title: 'Ubicación',
+                    icon: icon
+                });
+                var infoWindowContent = '{{ $inmuebleData->address }}';
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: infoWindowContent
+                });
+                marker.addListener('mouseover', function() {
+                    infoWindow.open(map, marker);
+                });
+
+                marker.addListener('mouseout', function() {
+                    infoWindow.close();
+                });
+
+                var statusMap = document.getElementById('statusMap');
+                //statusMap.classList.toggle('hidden');
+            } else {
+                console.log('No se pudieron obtener las coordenadas.');
+            }
         });
     </script>
 
-
-
-    <script>
-        // Compartir en Facebook
-        const shareFacebookButton = document.getElementById('shareFacebook');
-        shareFacebookButton.addEventListener('click', function() {
-            const pageUrl = encodeURIComponent(window.location.href);
-            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-            window.open(facebookUrl, '_blank', 'width=600,height=300');
-        });
-
-        // Compartir en WhatsApp
-        const shareWhatsAppButton = document.getElementById('shareWhatsApp');
-        shareWhatsAppButton.addEventListener('click', function() {
-            const pageUrl = encodeURIComponent(window.location.href);
-            const whatsappUrl = `https://api.whatsapp.com/send?text=${pageUrl}`;
-            window.open(whatsappUrl, '_blank', 'width=600,height=300');
-        });
-
-        // Compartir por correo electrónico
-        const shareMailButton = document.getElementById('shareMail');
-        shareMailButton.addEventListener('click', function() {
-            const pageTitle = encodeURIComponent(document.title);
-            const pageUrl = encodeURIComponent(window.location.href);
-            const mailUrl = `mailto:?subject=${pageTitle}&body=${pageUrl}`;
-            window.open(mailUrl, '_blank', 'width=600,height=300');
-        });
-
-        // Compartir en Twitter
-        const shareTwitterButton = document.getElementById('shareTwitter');
-        shareTwitterButton.addEventListener('click', function() {
-            const pageTitle = encodeURIComponent(document.title);
-            const pageUrl = encodeURIComponent(window.location.href);
-            const tweetUrl = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
-            window.open(tweetUrl, '_blank', 'width=600,height=300');
-        });
-        
-    </script>
-
-
-
-
-
-
+    <script src="https://media.renthub.es/js/anuncioShareFunctions.js"></script>
+    <script src="https://media.renthub.es/js/anuncioContactFunctions.js"></script>
     <br><br><br>
 @endsection
 @section('footer')

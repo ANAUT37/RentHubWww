@@ -11,7 +11,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-lg lg:col-start-2 hover:border-gray-600 border flex flex-col">
                     <h2 class="text-xl font-semibold mb-4 align-middle">Particular Básico <span
-                            class="inline-block px-3 py-1 text-sm font-semibold leading-tight text-white bg-blue-400 rounded-full ">Grátis</span>
+                            class="inline-block px-3 py-1 text-sm font-semibold leading-tight text-white bg-pink-700 rounded-full ">Grátis</span>
                     </h2>
                     <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -19,28 +19,31 @@
                         0€<span class="text-sm font-semibold mb-4 text-center">/mes</span>
                     </h3>
                     <a href="/signup/particular"
-                        class="text-center bg-gray-100 border border-gray-300 hover:cursor-pointer text-black px-6 w-full py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">Seleccionar</a>
+                        class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                        py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">Seleccionar</a>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:border-gray-600 border lg:col-start-3 flex flex-col">
                     <h2 class="text-xl font-semibold mb-4">Particular Premium</h2>
                     <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua.</p>
                     <h3 class="text-4xl font-semibold m-6 text-center">
-                        10€<span class="text-sm font-semibold mb-4 text-center">/mes</span>
+                        9,90€<span class="text-sm font-semibold mb-4 text-center">/mes</span>
                     </h3>
-                    <a href="/signup/particular?p=1"
-                    class="text-center bg-gray-100 border border-gray-300 hover:cursor-pointer text-black px-6 w-full py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">Seleccionar</a>
+                    <a href="/signup/particular?type=premium"
+                    class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                    py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">Seleccionar</a>
                 </div>
                 <div 
-                    class="bg-white p-6 rounded-lg border-blue-400 shadow-lg hover:border-blue-400 border lg:col-start-4 col-span-1 flex flex-col">
+                    class="bg-white p-6 rounded-lg border-pink-700 shadow-lg hover:border-pink-700 border lg:col-start-4 col-span-1 flex flex-col">
                     <h2 class="text-xl font-semibold mb-4">Empresas</h2>
                     <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua.</p>
                     <h3 class="text-4xl font-semibold m-6 text-center">
-                        30€<span class="text-sm font-semibold mb-4 text-center">/mes</span>
+                        29,90€<span class="text-sm font-semibold mb-4 text-center">/mes</span>
                     </h3>
-                    <a href="/signup/empresa"
-                    class="text-center bg-gray-100 border border-gray-300 hover:cursor-pointer text-black px-6 w-full py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">Seleccionar</a>
+                    <p 
+                    class="text-center flex gap-1 border border-pink-700 align-center px-3 w-auto
+                    py-2 rounded-md  ">¡Próximamente!</p>
                 </div>
             </div>
         </div>
@@ -48,5 +51,5 @@
     <br><br><br>
 @endsection
 @section('footer')
-    @include('Footers.full_footer')
+    @include('Footers.small_footer')
 @endsection
