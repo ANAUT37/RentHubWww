@@ -8,6 +8,9 @@ class ChatList extends Component
 {
     public function render()
     {
-        return view('livewire.chat.chat-list');
+        $coversations = [];
+        return view('livewire.chat.chat-list',    [
+            'conversations' => $coversations
+        ]);
     }
 }

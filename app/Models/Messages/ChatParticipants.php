@@ -34,8 +34,14 @@ class ChatParticipants extends Model
         return  ChatParticipants::where('user_id', $userId)->pluck('chat_id');
     }
     public static function getParticipantsFromChat($chatId)
-    {   
-        
+    {
+
         return ChatParticipants::where('chat_id', $chatId)->pluck('user_id');
+    }
+
+    public static function getOtherParticipant($chatId, $userId)
+    {
+        return ChatParticipants::where('chat_id', $chatId)
+            ->where('user_id', '!=', $userId)->first();
     }
 }

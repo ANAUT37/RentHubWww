@@ -43,6 +43,12 @@ class ChatRequest extends Model
         return $chatsRequestAll;
     }
 
+    public static function getDataById($id)
+    {
+        $data=ChatRequest::where('id',$id)->first();
+        return $data;
+    }
+
     public static function getRequestIdFromDisplayId($displayId)
     {
         $chatRequest = ChatRequest::where('display_id', $displayId)->first();

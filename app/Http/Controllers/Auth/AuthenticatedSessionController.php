@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Mail\OnLogin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(Request $request): View
+    public function store(Request $request)
     {
         //$request->authenticate();
 
@@ -42,10 +43,15 @@ class AuthenticatedSessionController extends Controller
             $request->session()->put('two_factor_code', $twoFactorCode);
 
             // Enviar el código de autenticación por correo electrónico
-            Mail::to($request->user()->email)->send(new TwoFactorAuthentication($twoFactorCode));
+            //Mail::to($request->user()->email)->send(new TwoFactorAuthentication($twoFactorCode));
 
+
+            $userGuest = $request->server('HTTP_USER_AGENT');
+            $ipAddress = $request->ip();
+            Mail::to($request->user())->send(new OnLogin($userGuest, $ipAddress));
             // Redirigir al usuario a la página de verificación del código de autenticación
-            return view('Auth.Login.verificationCode');
+            return redirect()->back();
+            //return view('Auth.Login.verificationCode');
         } else {
             // Si las credenciales no son válidas, redirigir de vuelta al formulario de inicio de sesión con un mensaje de error
             return redirect()->route('login')->with('error', 'Credenciales no válidas.');

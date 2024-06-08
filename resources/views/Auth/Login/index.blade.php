@@ -6,10 +6,11 @@
 @include('Headers.header_manager')
 @endsection
 @section('content')
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+
     <div class="container mx-auto py-12 px-4">
         <div class="max-w-lg mx-auto bg-white p-10 rounded-lg ">
             <h1 class="text-2xl font-bold mb-6">Iniciar sesión</h1>
+            <x-auth-session-status class="mb-4 w-full p-4" :status="session('status')" />
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-6">
@@ -32,7 +33,8 @@
                         <label for="remember_me">Recordarme</label>
                     </div>
                     <button type="submit"
-                        class="bg-gray-100 border border-gray-300 text-black px-6 py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">Iniciar
+                        class="text-center flex gap-1 hover:cursor-pointer  px-3 w-auto
+                        py-2 rounded-md hover:bg-gray-200 bg-gray-100 focus:outline-none ">Iniciar
                         sesión</button>
                 </div>
             </form>

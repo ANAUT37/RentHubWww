@@ -3,8 +3,8 @@
         <nav>
             <div
                 class="max-w-7xl mx-auto flex justify-between items-start flex-col lg:flex-row sm:flex-col sm:align-middle ">
-                <a href="/"
-                    class="text-gray-950 text-2xl font-bold mb-4 lg:mb-0 sm:mb-4 w-full lg:w-auto sm:w-full">RêntHûb.es</a>
+                <a href="/" class=" text-2xl font-bold mb-4 lg:mb-0 sm:mb-4 w-1/2 lg:w-auto sm:w-full lg:order-1 order-1">RêntHûb<span class="text-pink-700 text-2xl hover:text-black">.</span>es</a>
+
                 <ul class="flex space-x-4">
                     <li><a href="/login" class="text-gray-600 font-bold hover:text-gray-950">Iniciar sesión</a></li>
                     <li><a href="/signup" class="text-gray-600 font-bold hover:text-gray-950">Registrarme</a></li>

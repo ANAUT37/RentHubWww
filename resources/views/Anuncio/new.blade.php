@@ -1,12 +1,12 @@
 @extends('Layouts.main')
 @section('title', 'RêntHûb.es | New')
 @section('header')
-    @include('Headers.header_manager')
+    @include('Headers.header_manager_home')
 @endsection
 @section('content')
     <style>
         .step {
-            background-color: rgb(59 130 246);
+            background-color: rgb(190, 24, 93);
             color: white;
         }
     </style>
@@ -22,22 +22,21 @@
                     <div id="markstep2" class="rounded-full bg-gray-300 w-8 h-8 flex items-center justify-center">2</div>
                     <div class="ml-2">Inmueble</div>
                 </div>
-
             </div>
         </div>
-        <form action="/signup/particular/new" method="POST" enctype="multipart/form-data">
+        <form id="formulario" action="/anuncio/new/save" method="POST" enctype="multipart/form-data">
+            @csrf
             <div id="formstep1">
                 <p class="text-gray-600 mb-4 text-center pt-10">Para comenzar a publicar tu anuncio, por favor completa el
                     siguiente formulario con la información relevante sobre la propiedad que deseas anunciar. Te guiaremos
                     paso a paso para asegurarnos de que tu anuncio sea completo y atractivo para posibles interesados.</p>
                 <br>
                 <div class="mb-6 ">
-                    <label for="title" class="block text-gray-700 font-bold mb-2">Categoría:</label>
-                    <select name="provincia" id="provincia"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600"
+                    <label for="categoria" class="block text-gray-700 font-bold mb-2">Categoría:</label>
+                    <select name="categoria" id="categoria"
+                        class="w-full px-4 py-2 bg-white rounded-md focus:outline-none  cursor-pointer hover:bg-gray-200"
                         required>
                         <option value="none" disabled selected hidden>Categoría</option>
-                        <option value="pisos">Piso</option>
                         <option value="locales">Local</option>
                         <option value="compartir">Compartir</option>
                         <option value="casas">Casa</option>
@@ -59,9 +58,9 @@
                         name="description" id="description" rows="10" placeholder="Descripción"></textarea>
                 </div>
                 <div class="mb-6">
-                    <label for="title" class="block text-gray-700 font-bold mb-2">Precio de alquiler:</label>
+                    <label for="price" class="block text-gray-700 font-bold mb-2">Precio de alquiler:</label>
                     <div class="w-full flex border border-gray-300 rounded-md focus:border-gray-600">
-                        <input type="text" id="title" name="title"
+                        <input type="text" id="price" name="price"
                             class="w-full px-4 py-2 outline-none border-none rounded-md focus:outline-none"
                             placeholder="Precio" required>
                         <p class="w-auto px-4 py-2 rounded-md focus:outline-none  focus:border-gray-600">€/mes</p>
@@ -71,7 +70,7 @@
                     <a href="/signup"
                         class="text-gray-600 hover:underline col-start-1 plan hover:cursor-pointer">Cancelar</a>
                     <button id="step2"
-                        class="next bg-gray-100 border border-gray-300 text-black px-6 w-auto py-2 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none ">Continuar</button>
+                        class="bg-gray-100 rounded-md px-4 py-2 hover:bg-gray-200 next">Continuar</button>
                 </div>
             </div>
             <div id="formstep2" class="">
@@ -82,53 +81,91 @@
                             class="text-gray-600 hover:underline"> Términos de
                             privacidad</a></b></p>
                 <br>
-
             </div>
-
             <div class="mb-6">
-                <label for="profilePic" class="block text-gray-700 font-bold mb-2">Imágenes: (Mínimo una)</label>
-                <div class="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-6" id="dropzone">
-                    <div class="text-center">
-                        <img class="mx-auto h-12 w-12" src="https://www.svgrepo.com/show/357902/image-upload.svg"
-                            alt="">
-                        <h3 class="mt-2 text-sm font-medium text-gray-900">
-                            <label for="file-upload" class="relative cursor-pointer">
-                                <span>Arrastra y suelta</span>
-                                <span class="text-indigo-600"> o busca</span>
-                                <span>en tus archivos</span>
-                            </label>
-                            <input type="file" class="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" />
-                        </h3>
-                        <p class="mt-1 text-xs text-gray-500">
-                            PNG, JPG, GIF hasta 2MB
-                        </p>
+                <div id="imageSelectorDisplay"
+                    class="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-30 hidden">
+                    <div id="imageSelectorBackdrop" class="fixed top-0 left-0 w-full h-full bg-black opacity-50 hidden">
+                    </div>
+                    <div class="w-full h-full pt-20">
+                        <div id="documentSelectorDisplay"
+                            class="bg-white w-full h-full mx-auto  rounded-md flex justify-center"
+                            style="backdrop-filter: blur(10px);">
+                            <div class="lg:w-4/5 w-full h-full  flex justify-center">
+                                <div class="w-full lg:w-3/5 p-4 flex items-center flex-col">
+                                    <div class="w-full flex justify-between items-center">
+                                        <p class="block text-start text-xl font-bold mb-2">Selector de imágenes</p>
+                                        <div id="imageSelectorButtonClose" class="cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-10">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6 18 18 6M6 6l12 12" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="overflow-y-auto flex items-center flex-col h-full">
+                                        <label for="dropzone" class="block text-gray-700 font-bold mb-2">Imágenes: (Mínimo
+                                            una)</label>
+                                        <div class="lg:w-4/5 w-full relative border-2 border-gray-300 border-dashed rounded-lg p-6"
+                                            id="dropzone">
+                                            <div class="text-center">
+                                                <img class="mx-auto h-12 w-12"
+                                                    src="https://www.svgrepo.com/show/357902/image-upload.svg"
+                                                    alt="">
+                                                <h3 class="mt-2 text-sm font-medium text-gray-900">
+                                                    <label for="file-upload" class="relative cursor-pointer">
+                                                        <span>Arrastra y suelta</span>
+                                                        <span class="text-gray-600"> o busca</span>
+                                                        <span>en tus archivos</span>
+                                                    </label>
+                                                    <input type="file"
+                                                        class="absolute inset-0 w-full h-full opacity-0 z-50"
+                                                        id="file-upload" />
+                                                </h3>
+                                                <p class="mt-1 text-xs text-gray-500">
+                                                    PNG, JPG, GIF hasta 2MB
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm mb-2 text-gray-600 mt-1 w-full lg:w-4/5">Las <b>Etiquetas</b> que
+                                            agregues a tus fotos servirán para que
+                                            el resto de usuarios sepan a que parte del inmueble hace referencia dicha foto.
+                                        </p>
+                                        <div class="mt-4 w-full h-auto py-3  grid grid-cols-1 lg:grid-cols-2 gap-2"
+                                            id="preview" style="white-space: nowrap;">
+                                        </div>
+                                    </div>
+                                    <div class="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-30 hidden"
+                                        id="imagePreview">
+                                        <div id="imagePreviewBackdrop"
+                                            class="fixed hidden top-0 left-0 w-screen h-screen bg-gray-200 opacity-50">
+                                        </div>
+                                        <div id="imagePreviewContent"
+                                            class="absolute bg-white p-4 rounded-lg shadow-lg w-3/4 h-3/4 items-center flex justify-center ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p class="text-sm mb-2 text-gray-600 mt-1">Las <b>Etiquetas</b> que agregues a tus fotos servirán para que
-                    el resto de usuarios sepan a que parte del inmueble hace referencia dicha foto.
-                </p>
-                <div class="mt-4 mx-auto max-h-52 py-3 overflow-x-auto flex" id="preview" style="white-space: nowrap;">
-                    <!-- Aquí se mostrarán las imágenes -->
-                </div>
-            </div>
-
-            <div class="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-30 hidden"
-                id="imagePreview">
-                <div id="imagePreviewBackdrop" class="fixed hidden top-0 left-0 w-screen h-screen bg-gray-200 opacity-50">
-                </div>
-                <div id="imagePreviewContent"
-                    class="absolute bg-white p-4 rounded-lg shadow-lg w-3/4 h-3/4 items-center flex justify-center">
-                    <!-- Aquí se mostrará la imagen en grande -->
+                <label for="dropzone" class="block text-gray-700 font-bold mb-2">Imágenes: (Mínimo una)</label>
+                <div class="flex justify-center p-4">
+                    <div id="imageSelectorButtonOpen"
+                        class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer ">
+                        Pulse para abrir el selector de imágenes</div>
                 </div>
             </div>
             <br>
             <div class="mb-6">
                 <label for="birthdate" class="block text-gray-700 font-bold mb-2">Dirección</label>
-                <p class="text-sm mb-2 text-gray-600 mt-1">No es necesario que introduzcas la dirección exacta del inmueble,
+                <p class="text-sm mb-2 text-gray-600 mt-1">No es necesario que introduzcas la dirección exacta del
+                    inmueble,
                     simplemente una aproximada.
                 </p>
                 <div class="flex relative mb-2 lg:mb-0">
-                    <input id="locationInputInner" type="text" placeholder="Ciudad, barrio, calle..."
+                    <input id="locationInputInner" type="text" placeholder="Ciudad, barrio, calle..." name="address"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-600">
                     <div id="searchResultsInner"
                         class="absolute top-full left-0 w-full bg-transparent border border-gray-300 rounded-l-md z-50 rounded-br-md hidden">
@@ -136,143 +173,117 @@
                 </div>
                 <br>
                 <div class="mb-6">
-                    <label for="description" class="block text-gray-700 font-bold mb-2">Características del
+                    <label for="caracteristicas" class="block text-gray-700 font-bold mb-2">Características del
                         inmueble</label>
-                    <div class="flex flex-col lg:flex-row mb-4 lg:mb-0 sm:mb-4">
-                        <select name="categoryInner" id="caracteristicaKey"
-                            class="w-full lg:w-40 sm:w-100 px-2 py-1  bg-transparent border-gray-300 rounded-l-md">
-                            <option value="none" disabled selected hidden required>Opción</option>
-                            <option value="num_rooms">Habitaciones</option>
+                    <div class="flex lg:flex-row mb-4 lg:mb-0 sm:mb-4 items-center">
+                        <select name="categoryAttribute" id="caracteristicaKey"
+                            class="w-40 px-2  bg-transparent border-gray-300 rounded-l-md h-full">
+                            <option value="none" selected hidden required>Opción</option>
                         </select>
-                        <div class="flex relative mb-2 lg:mb-0">
+                        <div class="flex relative mb-0 h-full">
                             <input type="text" placeholder="Valor" id="caracteristicaValue"
                                 class="w-full lg:w-96 sm:w-64 px-3 py-2 border bg-transparent border-gray-300 ">
                         </div>
-                        <button id="addCaracteristica"
-                            class="bg-transparent border border-gray-300 text-black px-3 py-1 rounded-r-md  hover:bg-gray-600 hover:text-white hover:border-gray-600">Agregar</button>
+                        <div id="addCaracteristica"
+                            class="bg-transparent border  border-gray-300 text-black px-3 py-2 rounded-r-md  hover:bg-gray-200  hover:border-gray-600 cursor-pointer">
+                            Agregar</div>
                     </div>
                     <div class="mt-6 flex flex-col gap-2" id="caracteristicasDisplay">
 
-
                     </div>
                 </div>
-
                 <div class="mb-6 flex justify-between">
                     <button id="backstep2"
                         class="prev text-gray-600 hover:underline col-start-1 plan hover:cursor-pointer">Volver</button>
-                    <button id="step3"
-                        class="next bg-gray-100 border border-gray-300 text-black px-6 w-auto py-2 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none ">Continuar</button>
+                    <input id="step3" type="submit" value="Publicar"
+                        class="next bg-pink-700 cursor-pointer rounded-md px-4 py-2 hover:bg-gray-200"></input>
                 </div>
+                <input type="text" name="latitude" id="latitude" hidden value="">
+                <input type="text" name="longitude" id="longitude" hidden value="">
             </div>
         </form>
-    </div>
-    <script>
-        var addCaracteristica = document.getElementById('addCaracteristica');
-        var caracteristicasDisplay = document.getElementById('caracteristicasDisplay');
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const categoriaSelect = document.getElementById('categoria');
+                const caracteristicaKeySelect = document.getElementById('caracteristicaKey');
 
-        addCaracteristica.addEventListener('click', function() {
-            var selectElement = document.getElementById('caracteristicaKey');
-            var selectedOption = selectElement.options[selectElement.selectedIndex].text;
 
-            var valueInput = document.getElementById('caracteristicaValue');
-            var caracteristicaValue = valueInput.value;
+                categoriaSelect.addEventListener('change', function() {
+                    const categoria = this.value;
+                    const url = '/anuncio/new/categories?categoria=' + categoria
+                    console.log(url)
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            caracteristicaKeySelect.innerHTML = '';
+                            console.log(data)
+                            data.forEach(option => {
+                                const optionElement = document.createElement('option');
+                                optionElement.value = option.key;
+                                optionElement.textContent = option.display_name;
+                                caracteristicaKeySelect.appendChild(optionElement);
+                                var addCaracteristica = document.getElementById(
+                                    'addCaracteristica');
+                                var valueInput = document.getElementById('caracteristicaValue');
+                                caracteristicaKeySelect.removeAttribute('disabled');
+                                valueInput.removeAttribute('disabled');
+                                addCaracteristica.removeAttribute('disabled');
 
-            var container = document.createElement('div');
-            container.classList.add('border', 'border-gray-200', 'rounded-md', 'w-full', 'flex', 'justify-end');
 
-            var contentRow = document.createElement('div');
-            contentRow.classList.add('flex', 'w-full');
-
-            var keyElement = document.createElement('p');
-            keyElement.classList.add('w-1/2', 'px-4', 'py-2', 'rounded-md', 'focus:outline-none', 'flex',
-                'items-center');
-            keyElement.textContent = selectedOption;
-            contentRow.appendChild(keyElement);
-
-            var valueElement = document.createElement('p');
-            valueElement.classList.add('w-1/2', 'px-4', 'py-2', 'rounded-md', 'focus:outline-none', 'flex',
-                'items-center');
-            valueElement.textContent = caracteristicaValue;
-            contentRow.appendChild(valueElement);
-
-            container.appendChild(contentRow);
-
-            var buttonContainer = document.createElement('div');
-            buttonContainer.classList.add('flex', 'justify-center', 'items-center', 'h-12', 'w-12',
-                'hover:bg-gray-200', 'cursor-pointer');
-            buttonContainer.addEventListener('click', function() {
-                caracteristicasDisplay.removeChild(container);
-            });
-
-            var svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-            svgElement.setAttribute('fill', 'none');
-            svgElement.setAttribute('viewBox', '0 0 24 24');
-            svgElement.setAttribute('stroke-width', '1.5');
-            svgElement.setAttribute('stroke', 'currentColor');
-            svgElement.classList.add('w-6', 'h-6');
-
-            var svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            svgPath.setAttribute('stroke-linecap', 'round');
-            svgPath.setAttribute('stroke-linejoin', 'round');
-            svgPath.setAttribute('d',
-                'm14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0'
-            );
-            svgElement.appendChild(svgPath);
-
-            buttonContainer.appendChild(svgElement);
-            container.appendChild(buttonContainer);
-
-            caracteristicasDisplay.appendChild(container);
-        });
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places"></script>
-    <script>
-        var searchInputInner = document.getElementById('locationInputInner');
-        var searchResultsInner = document.getElementById('searchResultsInner');
-
-        searchInputInner.setAttribute('autocomplete', 'off');
-
-        var autocomplete = new google.maps.places.Autocomplete(null, {
-            types: ['address']
-        });
-
-        autocomplete.addListener('place_changed', function() {
-            var place = autocomplete.getPlace();
-            searchInputInner.value = place.formatted_address;
-        });
-
-        searchInputInner.addEventListener('input', function() {
-            var query = searchInputInner.value;
-            if (query.length === 0) {
-                searchResultsInner.innerHTML = '';
-                searchResultsInner.classList.add('hidden');
-                return;
-            }
-            var service = new google.maps.places.AutocompleteService();
-            service.getPlacePredictions({
-                input: query
-            }, function(predictions, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    searchResultsInner.innerHTML = '';
-                    searchResultsInner.classList.remove('hidden');
-                    predictions.forEach(function(prediction) {
-                        var div = document.createElement('div');
-                        div.textContent = prediction.description;
-                        div.classList.add('w-full', 'px-2', 'py-1',
-                            'hover:cursor-pointer', 'hover:bg-gray-100', 'bg-white');
-                        div.addEventListener('click', function() {
-                            prediction
-                            searchInputInner.value = prediction.description;
-                            searchResultsInner.innerHTML = '';
-                            searchResultsInner.classList.add('hidden');
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Hubo un error al obtener las opciones:', error);
                         });
-                        searchResultsInner.appendChild(div);
-                    });
-                } else {
-                    alert("Ups! Something went wrong... \n" + status);
-                }
+                });
             });
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places"></script>
+        <script>
+            function execGeocoding() {
+                const address = document.getElementById('locationInputInner').value;
+                geocodeAddress(address);
+            }
+
+            function geocodeAddress(address) {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'address': address
+                }, function(results, status) {
+                    if (status === 'OK') {
+                        const location = results[0].geometry.location;
+                        const lat = location.lat();
+                        const lng = location.lng();
+                        displayResult(lat, lng);
+                    } else {
+                        displayResult(null, null, 'La dirección no se pudo convertir.');
+                    }
+                });
+            }
+
+            function displayResult(lat, lng, error = null) {
+                var latDisplay = document.getElementById('latitude');
+                latDisplay.value = lat;
+                var lngDisplay = document.getElementById('longitude');
+                lngDisplay.value = lng;
+            }
+        </script>
+    </div>
+
+    <script>
+        var imageSelectorDisplay = document.getElementById('imageSelectorDisplay');
+        var imageSelectorBackdrop = document.getElementById('imageSelectorBackdrop');
+        var imageSelectorButtonOpen = document.getElementById('imageSelectorButtonOpen');
+        var imageSelectorButtonClose = document.getElementById('imageSelectorButtonClose');
+
+        imageSelectorButtonOpen.addEventListener('click', function() {
+            imageSelectorDisplay.classList.toggle('hidden');
+            imageSelectorBackdrop.classList.toggle('hidden');
+        });
+
+        imageSelectorButtonClose.addEventListener('click', function() {
+            imageSelectorDisplay.classList.toggle('hidden');
+            imageSelectorBackdrop.classList.toggle('hidden');
         });
     </script>
     <script>
@@ -306,6 +317,9 @@
 
         function displayPreview(files) {
             var preview = document.getElementById('preview');
+            var number = preview.children.length;
+
+            //var number = 0; // Variable para el nombre del input de archivo
 
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
@@ -313,125 +327,106 @@
                 reader.readAsDataURL(file);
                 reader.onload = () => {
                     var container = document.createElement('div');
-                    container.classList.add('relative', 'mr-4', 'border-gray-200', 'rounded-md');
+                    container.classList.add('rounded-md', 'border', 'border-gray-200', 'flex', 'flex-col', 'max-h-auto',
+                        'relative', 'overflow-hidden');
 
                     var image = document.createElement('img');
                     image.src = reader.result;
-                    image.classList.add('max-h-40', 'w-auto', 'cursor-pointer');
+                    image.classList.add('object-cover', 'rounded-t-md', 'max-h-60', 'h-60', 'w-full');
                     image.addEventListener('click', function() {
                         showImageInPreview(reader.result);
                     });
                     container.appendChild(image);
 
+                    // Create delete button and place it fixed to the top-left of the container
                     var deleteBtn = document.createElement('button');
-                    deleteBtn.classList.add('absolute', 'top-0', 'right-0', 'text-red-500', 'bg-white', 'rounded-full',
-                        'p-1', 'hover:bg-red-500', 'hover:text-white');
+                    deleteBtn.classList.add('absolute', 'top-0', 'left-0');
                     deleteBtn.innerHTML =
-                        '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>';
-                    deleteBtn.style.display = 'none'; // Inicialmente oculto
+                        '<svg xmlns="http://www.w3.org/2000/svg" fill="#ff0000" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff0000" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>';
                     deleteBtn.addEventListener('click', () => {
                         preview.removeChild(container);
                     });
-                    container.appendChild(deleteBtn);
+                    container.appendChild(deleteBtn); // Append the button to the container
 
-                    container.addEventListener('mouseover', () => {
-                        deleteBtn.style.display = 'block';
-                    });
-                    container.addEventListener('mouseout', () => {
-                        deleteBtn.style.display = 'none';
-                    });
+                    // Create file input and input text for tagging
+                    var inputFile = document.createElement('input');
+                    inputFile.setAttribute('type', 'file');
+                    inputFile.setAttribute('name', 'img-' + number); // Set the name of the file input
+                    //inputFile.setAttribute('style', 'display:none;'); // Hide the input
+                    container.appendChild(inputFile); // Append the hidden input to the container
 
-                    // Botón para mostrar input de texto
-                    var textInputBtn = document.createElement('button');
-                    textInputBtn.classList.add('absolute', 'top-0', 'left-0', 'text-green-500', 'bg-white',
-                        'rounded-full',
-                        'p-1', 'hover:bg-green-500', 'hover:text-white');
-                    textInputBtn.innerHTML =
-                        '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>';
-                    textInputBtn.addEventListener('click', () => {
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('placeholder', 'Etiqueta');
-                        input.classList.add('border', 'border-gray-300', 'px-2', 'py-1', 'rounded');
-                        input.style.width = image.offsetWidth +
-                            'px'; // Establece el ancho del input igual al de la imagen
-                        container.appendChild(input);
-                    });
-                    container.appendChild(textInputBtn);
+                    var inputText = document.createElement('input');
+                    inputText.setAttribute('type', 'text');
+                    inputText.setAttribute('name', 'img-etiqueta-' + number);
+                    inputText.setAttribute('placeholder', 'Etiqueta');
+                    inputText.classList.add('w-full', 'rounded-b-md');
+                    container.appendChild(inputText); // Append the text input to the container
 
-                    preview.appendChild(container);
+                    number++;
+                    preview.prepend(container);
                 };
             }
 
         }
+
 
         function showImageInPreview(imageUrl) {
             var image = document.createElement('img');
             image.src = imageUrl;
             image.classList.add('max-w-2/3full', 'max-h-full');
 
-
-            imagePreviewContent.innerHTML = ''; // Limpia el contenido existente
-            imagePreviewContent.appendChild(image); // Agrega la imagen al contenedor
-            imagePreview.classList.remove('hidden'); // Muestra la vista previa de la imagen
-            imagePreviewBackdrop.classList.remove('hidden'); // Muestra el fondo oscuro de la vista previa
+            imagePreviewContent.innerHTML = '';
+            imagePreviewContent.appendChild(image);
+            imagePreview.classList.remove('hidden');
+            imagePreviewBackdrop.classList.remove('hidden');
         }
 
         const imagePreviewBackdrop = document.getElementById('imagePreviewBackdrop');
         imagePreviewBackdrop.addEventListener('click', function() {
-            imagePreview.classList.add('hidden'); // Oculta la vista previa de la imagen
-            imagePreviewBackdrop.classList.add('hidden'); // Oculta el fondo oscuro de la vista previa
+            imagePreview.classList.add('hidden');
+            imagePreviewBackdrop.classList.add('hidden');
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuTriggers = document.querySelectorAll('.next');
-            menuTriggers.forEach(trigger => {
-                trigger.addEventListener('click', () => {
-                    let id = trigger.getAttribute('id').replace('step',
-                        '');
-                    if (id < 5) {
-                        let nextForm = document.getElementById('formstep' + id);
-                        let prevForm = document.getElementById('formstep' + (parseInt(id) - 1));
+        document.addEventListener("DOMContentLoaded", function() {
+            const categoriaSelect = document.getElementById('categoria');
+            const caracteristicaKeySelect = document.getElementById('caracteristicaKey');
 
-                        nextForm.classList.toggle('hidden');
-                        prevForm.classList.toggle('hidden');
+            categoriaSelect.addEventListener('change', function() {
+                const categoria = this.value;
+                fetch('/anuncio/new/categories?categoria=' + categoria)
+                    .then(response => response.json())
+                    .then(data => {
+                        caracteristicaKeySelect.innerHTML = '';
+                        data.forEach(option => {
+                            const optionElement = document.createElement('option');
+                            optionElement.value = option.key;
+                            optionElement.textContent = option.display_name;
+                            caracteristicaKeySelect.appendChild(optionElement);
+                            var addCaracteristica = document.getElementById(
+                                'addCaracteristica');
+                            var valueInput = document.getElementById('caracteristicaValue');
+                            caracteristicaKeySelect.removeAttribute('disabled');
+                            valueInput.removeAttribute('disabled');
+                            addCaracteristica.removeAttribute('disabled');
 
-                        let nextMark = document.getElementById('markstep' + id);
-                        let prevMark = document.getElementById('markstep' + (parseInt(id) - 1));
 
-                        nextMark.classList.toggle('step');
-                        prevMark.classList.toggle('step');
-                    }
-
-                });
-            });
-        });
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuTriggers = document.querySelectorAll('.prev');
-            menuTriggers.forEach(trigger => {
-                trigger.addEventListener('click', () => {
-                    let id = trigger.getAttribute('id').replace('backstep',
-                        '');
-                    if (id < 5) {
-                        let nextForm = document.getElementById('formstep' + (parseInt(id) - 1));
-                        let prevForm = document.getElementById('formstep' + id);
-
-                        nextForm.classList.toggle('hidden');
-                        prevForm.classList.toggle('hidden');
-
-                        let nextMark = document.getElementById('markstep' + (parseInt(id) - 1));
-                        let prevMark = document.getElementById('markstep' + id);
-
-                        nextMark.classList.toggle('step');
-                        prevMark.classList.toggle('step');
-                    }
-
-                });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Hubo un error al obtener las opciones:', error);
+                    });
             });
         });
     </script>
+
+
+    <script src="https://media.renthub.es/js/categoryAttributeHandler.js"></script>
+    <script src="https://media.renthub.es/js/categoryAttributesDisplayManager.js"></script>
+    <script src="https://media.renthub.es/js/locationFillerInner.js"></script>
+    <!--<script src="https://media.renthub.es/js/imageDrop.js"></script>-->
+    <script src="https://media.renthub.es/js/dinamicFormStepper.js"></script>
 @endsection
 @section('footer')
-    @include('Footers.full_footer')
+    @include('Footers.small_footer')
 @endsection

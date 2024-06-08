@@ -53,8 +53,8 @@
                         </div>
                     </div>
                     <button id="participantsButton"
-                        class="bg-white border border-gray-300 text-black px-3 py-1 rounded-md sm:rounded-r-md flex
-                      hover:bg-gray-600 hover:text-white hover:border-gray-600 gap-2">
+                        class=" bg-gray-100  px-3 py-1 rounded-md sm:rounded-r-md flex
+                      hover:bg-gray-200   gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6 cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -73,14 +73,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/editor.css') }}">
     <style>
         .ck .ck-content {
-            padding-left: 25%;
-            padding-right: 25%;
-            width: ;
+            padding-left: 20%;
+            padding-right: 20%;
             min-height: 70vh;
             max-height: 70vh;
             overscroll-behavior-y: inherit;
         }
-
+        .ck-content{
+            background-color: red;
+        }
         body {
             overflow-y: hidden;
         }
@@ -95,14 +96,34 @@
             style="backdrop-filter: blur(10px);">
             <p class="text-2xl font-bold">Participantes</p>
             <p>Lista de participantes y sus permisos para ver o editar este documento</p>
+            <?php
+            if($userRole===2){
+            ?>
+            <div class="border-b border-gray-100 pb-2">
+                <div class="flex ">
+                    <input type="email" id="shareEmail" placeholder="Email de la persona a compartir"
+                        class="w-full px-2 py-1 border border-gray-300 rounded-l-md sm:rounded-l-md">
+                    <select name="role" id="shareRole" class="cursor-pointer p-1 min-w-24 h-auto">
+                        <option value="editor">Editor</option>
+                        <option value="lector">Lector</option>
+                    </select>
+                    <button id="shareRoleButton"
+                        class="bg-white border w-24 text-center border-gray-300 text-black px-3 py-1 rounded-r-md  flex
+                  hover:bg-gray-600 hover:text-white hover:border-gray-600 gap-2">Compartir</button>
+                </div>
+                <p class="text-md hidden" id="shareResponse">Resonse message</p>
+            </div>
+            <?php
+                }
+                ?>
             @foreach ($listParticipants as $participant)
                 @php
                     $userData = Particular::getParticularData($participant->user_id);
                 @endphp
                 <div class="w-100 hover:bg-gray-200 hover:cursor-pointer flex rounded-lg justify-between">
                     <div class="p-4 min-w-16">
-                        <img class="profile-button rounded-full h-10 w-auto flex items-center justify-center border-1 border border-gray-200 focus:outline-none"
-                            src="{{ App\Models\User::getProfilePic(Auth::user()->id) }}" alt="">
+                        <img class="profile-button rounded-full h-10 w-10 flex items-center justify-center border-1 border border-gray-200 focus:outline-none"
+                            src="{{ App\Models\User::getProfilePic(Auth::user()->profile_pic_url) }}" alt="">
                     </div>
                     <div class="w-full">
                         <div class="max-w-lg p-4 rounded-lg ">
@@ -156,7 +177,7 @@
         ClassicEditor
             .create(document.querySelector('#editor'))
             .then(editor => {
-                editor.setData("{{$documentData->content}}");
+                editor.setData("{{ $documentData->content }}");
 
 
                 setInterval(() => {
@@ -220,7 +241,44 @@
             });
         }
     </script>
+    <?php
+    if($userRole===2){
+    ?>
+    <script>
+        const shareRoleButton = document.getElementById('shareRoleButton');
+        const shareResponse = document.getElementById('shareResponse');
+        if (shareRoleButton) {
+            shareRoleButton.addEventListener('click', function() {
+                const rolesData = {};
+                const shareRole = document.getElementById('shareRole').value;
+                rolesData['shareRole'] = shareRole;
+                const shareEmail = document.getElementById('shareEmail').value;
+                rolesData['shareEmail'] = shareEmail;
 
+                fetch('/docs/{{ $display_id }}/shareRole', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify(rolesData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        shareResponse.classList.toggle('hidden');
+                        shareResponse.textContent = data.message;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        }
+    </script>
+
+
+    <?php
+    }
+    ?>
     <script>
         const participantsButton = document.getElementById('participantsButton');
         const participantsDisplay = document.getElementById('participantsDisplay');

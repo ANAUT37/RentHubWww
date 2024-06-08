@@ -13,8 +13,8 @@
                 <input type="text" placeholder="Buscar en tus documentos" required
                     class="w-full lg:w-96 sm:w-64 px-2 py-1 border border-gray-300 rounded-md sm:rounded-l-md">
                 <button id="newDocButton"
-                    class="bg-white border border-gray-300 text-black px-3 py-1 rounded-md sm:rounded-r-md
-                      hover:bg-gray-600 hover:text-white hover:border-gray-600">Nuevo</button>
+                    class="  bg-gray-100  px-3 py-1 rounded-md sm:rounded-r-md
+                       hover:bg-gray-200">Nuevo</button>
             </div>
             <x-input-error :messages="$errors->get('title')" class="mt-2" />
             <br>
@@ -34,7 +34,7 @@
         $allDocs = Doc::getAll(Auth::user()->id);
     @endphp
     <div class="containergap-4 w-4/5 lg:w-2/3 mx-auto pt-2 mb-4 z-10">
-        <div role="status" id="status" class="absolute top-1/4 right-1/2 mt-4 hidden">
+        <div role="status" id="status" class="absolute top-1/4 right-1/2 mt-4">
             <svg aria-hidden="true" class="w-6 h-6 text-gray-100 animate-spin dark:text-gray-300 fill-gray-950"
                 viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -46,8 +46,8 @@
             </svg>
             <span class="sr-only">Loading...</span>
         </div>
-        <div id="content" class="">
-            <div class="flex flex-col align-middle p-3">
+        <div id="content" class="hidden">
+            <div class="flex flex-col align-middle lg:p-3">
                 <table class="w-full">
                     @foreach ($allDocs as $doc)
                         <tr class="border border-gray-100 rounded-md hover:bg-gray-100 cursor-pointer mb-2">
@@ -62,7 +62,7 @@
                                             d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                                     </svg>
                                     <div
-                                        class="absolute top-full left-0 hidden bg-white border border-gray-200 shadow-md py-1 px-2 w-48 rounded-md dropdown-menu">
+                                        class="absolute top-full right-0 hidden bg-white border border-gray-200 shadow-md py-1 px-2 w-48 rounded-md dropdown-menu">
                                         <a href="/docs/{{ $doc->display_id }}"
                                             class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Abrir</a>
                                         <a href="/docs/delete/{{ $doc->display_id }}"
@@ -85,7 +85,7 @@
                 <form action="{{ route('docs.create') }}" method="POST" enctype="multipart/form-data"
                     class="flex justify-between gap-2">
                     @csrf
-                    <input name="title" type="text" placeholder="Título para el documento"
+                    <input name="title" type="text" placeholder="Título para el documento" id="newDocTitle"
                         class="w-full px-2 py-1 border border-gray-300 rounded-md sm:rounded-l-md">
 
                     <button id="newDocButton" type="submit"
@@ -97,6 +97,17 @@
             </div>
         </div>
     </div>
+    @if ($action === 'new')
+        <script>
+            const newActionDocDisplay = document.getElementById('newDocDisplay');
+            const newActionDocDisplayBackdrop = document.getElementById('newDocDisplayBackdrop');
+            const newActionDocTitle = document.getElementById('newDocTitle');
+            newActionDocDisplay.classList.toggle('hidden');
+            newActionDocDisplayBackdrop.classList.toggle(
+                'hidden');
+            newActionDocTitle.focus()
+        </script>
+    @endif
     <script>
         const dropdownIcons = document.querySelectorAll('.dropdown-icon');
         dropdownIcons.forEach(icon => {
@@ -143,6 +154,15 @@
                 'hidden');
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusElement = document.getElementById('status');
+            const contentElement = document.getElementById('content');
+            statusElement.classList.toggle('hidden');
+            contentElement.classList.toggle('hidden');
+        });
+    </script>
+
 @endsection
 @section('footer')
 @endsection

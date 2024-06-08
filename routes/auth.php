@@ -12,11 +12,19 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    Route::post('/signup/checkout/{display_id}/{paymentMethodId}/{status}/confirmed', [RegisteredUserController::class, 'checkoutConfirmed']);
     Route::get('signup', [RegisteredUserController::class, 'create'])
         ->name('signup');
 
-    Route::get('signup/particular', [RegisteredUserController::class, 'particular'])
-        ->name('signup');
+    Route::get('signup/particular', [RegisteredUserController::class, 'particular']);
+
+    Route::get('/signup/completed',[RegisteredUserController::class, 'completed']);
+
+    Route::get('/signup/checkout/{display_id}/premium',[RegisteredUserController::class, 'checkout']);
+
+
+
+    Route::get('signup/checkout/{display_id}/cancel', [RegisteredUserController::class, 'cancelCheckout']);
 
     Route::post('signup/particular', [RegisteredUserController::class, 'storeParticular']);
 

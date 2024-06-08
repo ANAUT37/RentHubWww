@@ -16,8 +16,10 @@
     <div class="container flex-col gap-2 w-4/5 lg:w-2/3 mx-auto pt-2 flex justify-center">
         <h1 class="text-2xl font-bold"><a href="{{ route('profile.index') }}" class="hover:underline">Tu cuenta</a> >
             Pagos y cobros</h1>
+        <div class="flex justify-end">
+            <a href="/account/payments/wallet" class="border border-gray-200 rounded-md w-auto py-2 px-4 hover:bg-gray-200 cursor-pointer" >Métodos de pago</a>
+        </div>
 
-        <button>Añadir método de pago</button>
 
         <div class="nav w-auto mt-2 border-b border-gray-500 pb-4">
             <button id="history"

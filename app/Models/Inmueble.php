@@ -9,28 +9,34 @@ class Inmueble extends Model
 {
     use HasFactory;
 
+    
+    protected $fillable=[
+        'id',
+        'display_id',
+        'latitude',
+        'longitude',
+        'address',
+        'category',
+        'user_id',
+        'created_at',
+        'updated_at'
+    ];
+
     protected $table = 'inmuebles';
 
-    public static function getAttributesFromCategory()
-    {
-        $categoria = $_GET['categoria'];
-
-        $caracteristicas = '';
-
-        if ($categoria === 'pisos') {
-            $caracteristicas .= '<label for="habitaciones">Número de habitaciones:</label>';
-            $caracteristicas .= '<input type="number" id="habitaciones" name="habitaciones">';
-            // Otros campos para pisos...
-        } elseif ($categoria === 'locales') {
-            $caracteristicas .= '<label for="metros_cuadrados">Metros cuadrados:</label>';
-            $caracteristicas .= '<input type="number" id="metros_cuadrados" name="metros_cuadrados">';
-            // Otros campos para locales...
-        } elseif ($categoria === 'compartir') {
-            $caracteristicas .= '<label for="habitaciones_disponibles">Habitaciones disponibles:</label>';
-            $caracteristicas .= '<input type="number" id="habitaciones_disponibles" name="habitaciones_disponibles">';
-            // Otros campos para compartir...
-        }
-
-        return $caracteristicas;
+    public static function getById($id){
+        $data = Inmueble::where('id',$id)->first();
+        return $data;
+    }
+    public static function getByDisplayId($display_id){
+        $data = Inmueble::where('display_id',$display_id)->first();
+        return $data;
+    }
+    public static function getSearchInmuebles($category, $longitude, $latitude, $distance){
+        $inmuebles = Inmueble::whereBetween('longitude', [($longitude - $distance), ($longitude + $distance)])
+        ->whereBetween('latitude', [($latitude - $distance), ($latitude + $distance)])
+        ->where('category',$category)
+        ->get();        
+        return $inmuebles;
     }
 }

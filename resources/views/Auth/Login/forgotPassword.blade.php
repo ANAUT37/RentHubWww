@@ -17,7 +17,7 @@
             </div>
             <div class="flex items-center justify-between">
                 <a href="/login" class="text-gray-600 hover:underline">Volver</a>
-                <button type="submit" class="bg-gray-100 border border-gray-300 text-black px-6 py-2 rounded-md hover:bg-gray-600 hover:text-white focus:outline-none ">Aceptar</button>
+                <button type="submit" class="bg-gray-100  px-4 py-2 rounded-md hover:bg-gray-200">Aceptar</button>
             </div>
         </form>
     </div>
