@@ -48,28 +48,20 @@ Route::post('/transaction', function (Request $request) {
             return response()->json(['error' => $validator->errors()->first()], 400);
         }
 
-        // Establecer la clave secreta de Stripe
-        //\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         \Stripe\Stripe::setApiKey('sk_test_51OexU1FHiAmjSHlNpyvzWHqTL8ORaRBlQDS1Hc6mGYZS2m0W9uwEjRQDC0cApymutskNXa0ho04wbr9v4RL1xIWK00nDUjAeBv');
-        //\Stripe\Stripe::setApiKey('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');
-        // Crear el intento de pago
         $paymentIntent = PaymentIntent::create([
-            'amount' => 0, // Monto en centavos
+            'amount' => 0, 
             'currency' => 'eur',
             'payment_method' => $request->input('paymentMethodId'),
             'confirmation_method' => 'manual',
             'confirm' => true,
             'return_url' => 'https://www.google.es'
         ]);
-
-        // Retornar el intento de pago
         return response()->json(['paymentIntent' => $paymentIntent]);
     } catch (ApiErrorException $e) {
-        // Manejar errores de Stripe
         Log::error('Stripe Error: ' . $e->getMessage());
         return response()->json(['error' => 'Error al procesar el pago ' . $e->getMessage()], 500);
     } catch (\Exception $e) {
-        // Manejar otros errores
         Log::error('Error: ' . $e->getMessage());
         return response()->json(['error' => 'Ocurrió un error inesperado' . $e->getMessage()], 500);
     }
